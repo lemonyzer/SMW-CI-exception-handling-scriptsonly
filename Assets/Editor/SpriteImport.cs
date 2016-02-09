@@ -8,7 +8,7 @@ using System.IO;
 
 public class SpriteImport {
 
-    public static void ImportCharacter(Sprite originalSprite, Palette palette)
+    public static void ImportCharacter(Sprite originalSprite, Palette palette, bool fCreatePreview)
     {
         if (originalSprite == null)
         {
@@ -43,7 +43,7 @@ public class SpriteImport {
         // Set Import Settings, and Slice
         SetRawCharacterSpriteSheetTextureImporter(spriteWithAlpha, true, true, false);
 
-
+        Texture2D tempTexture = new Texture2D(textureWithAlpha.width, textureWithAlpha.height, TextureFormat.ARGB32, false);
         for (int i=0; i<(int)Teams.count; i++)
         {
             // Generate Unique Asset Path for new Texture
@@ -53,15 +53,25 @@ public class SpriteImport {
             //TeamColor.ChangeColors(TeamColor.referenceColors[i], textureWithAlpha);
             //TeamColor.ChangeColors(TeamColor.referenceColorsVerzweigt[i], textureWithAlpha);
             // Full Palette
-            palette.ChangeColors(i, textureWithAlpha);
+            tempTexture.SetPixels (textureWithAlpha.GetPixels());
+            palette.ChangeColors(i, tempTexture);
 
             // Save as PNG
-            Sprite teamSpritesheet = SaveTextureAsSprite(textureWithAlpha, uniqueTeamAssetPath);
+            Sprite teamSpritesheet = SaveTextureAsSprite(tempTexture, uniqueTeamAssetPath);
 
             // Apply Import Settings, and Slice
             SetRawCharacterSpriteSheetTextureImporter(teamSpritesheet, false, true, true);
+
+            if (fCreatePreview)
+            {
+                GameObject preview = new GameObject("Preview " + i);
+                preview.transform.position = new Vector2(-2, 0) + Vector2.right * i;
+                SpriteRenderer renderer = preview.AddComponent<SpriteRenderer>();
+                renderer.sprite = teamSpritesheet;
+            }
         }
         // Clean Memory
+        UnityEngine.Object.DestroyImmediate(tempTexture);
         UnityEngine.Object.DestroyImmediate(textureWithAlpha);
     }
 

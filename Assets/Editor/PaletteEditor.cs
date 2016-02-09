@@ -101,14 +101,14 @@ public class PaletteEditor : Editor {
         if (teamColorPalette == null)
         {
             GUILayout.Label((Teams)teamId + " == NULL");
-            return; 
         }
-
-        for (int i=0; i< teamColorPalette.Length; i++)
+        else
         {
-            EditorGUILayout.ColorField(teamColorPalette[i]);
+            for (int i=0; i< teamColorPalette.Length; i++)
+            {
+                EditorGUILayout.ColorField(teamColorPalette[i]);
+            }
         }
-
         GUILayout.EndVertical();
     }
 }

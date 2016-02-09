@@ -145,22 +145,27 @@ public class Palette : ScriptableObject
     }
 
     public static int mTeamColorCount = 4;
-    public static int mTeamColorVariationsCount = 225;
+    public static int mTeamColorVariationsCount = 25;
     public static int mPaletteTeamColorOffset = 25;   // erste Reihe enthält andere Farbinformationen
 
     public Color[] GetTeamColorPalette(int teamId)
     {
-        if (colorPalette == null || colorPalette.Length != (25*9*4+1*25))
+        if (colorPalette == null || colorPalette.Length != (25 * 9 * 4 + 1 * 25))
+        {
+            return null;
+        }
+
+        if (teamColorPalette == null || teamColorPalette.Length != (25 * 4))
         {
             return null;
         }
 
         Color[] teamColor = new Color[mTeamColorVariationsCount];
 
-        int index = teamId * mTeamColorVariationsCount + mPaletteTeamColorOffset;
+        int index = teamId * mTeamColorVariationsCount;
         for (int i = 0; i < mTeamColorVariationsCount; i++)
         {
-            teamColor[i] = colorPalette[index + i];
+            teamColor[i] = teamColorPalette[index + i];
         }
 
         return teamColor;
@@ -199,12 +204,15 @@ public class Palette : ScriptableObject
                 bool pixelHasReferenceColor = false;
                 // schleife:
                 // schaue ob aktueller Pixel einer der folgenden referenz Farben besitzt:
-                for (int iColor = 0; iColor < mTeamColorCount; iColor++)
-                {
+
+                // vorher ein bild, alle farben möglich (schleife über alle teamfarben nötig)
+                // jetzt: ein raw bild unangetastet, immer nur raw reference werte möglich (keine schleife mehr nötig)
+                //for (int iColor = 0; iColor < mTeamColorCount; iColor++)
+                //{
                     Color32 refColor;
                     for (int iColorVariation = 0; iColorVariation < mTeamColorVariationsCount; iColorVariation++)
                     {
-                        refColor = GetTeamColorVariation(iColor, iColorVariation);
+                        refColor = GetReferenceColorVariation(iColorVariation);
 
                         if (currentColor.Equals(refColor))
                         {
@@ -214,9 +222,9 @@ public class Palette : ScriptableObject
                             break;
                         }
                     }
-                    if (pixelHasReferenceColor)
-                        break;
-                }
+                    //if (pixelHasReferenceColor)
+                    //    break;
+                //}
 
                 if (pixelHasReferenceColor)
                 {
@@ -230,13 +238,18 @@ public class Palette : ScriptableObject
         texture.Apply();
     }
 
+    public Color32 GetReferenceColorVariation(int colorVariationNumber)
+    {
+        return rawReferenceColorPalette[colorVariationNumber];
+    }
+
     public Color32 GetTeamColorVariation(int teamId, int colorVariationNumber)
     {
         Color32 teamColorVariation;
 
-        int index = teamId * mTeamColorVariationsCount + mPaletteTeamColorOffset;
+        int index = teamId * mTeamColorVariationsCount;
 
-        teamColorVariation = colorPalette[index + colorVariationNumber];
+        teamColorVariation = teamColorPalette[index + colorVariationNumber];
 
         return teamColorVariation;
     }

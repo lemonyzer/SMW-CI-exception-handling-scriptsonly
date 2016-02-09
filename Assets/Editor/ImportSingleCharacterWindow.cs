@@ -75,6 +75,7 @@ public class ImportSingleCharacterWindow : EditorWindow
 
     Teams slectedTeam = Teams.yellow;
 
+    bool fShowCreatedSprites = true;
     bool fStepByStep = true;
     bool fFull = true;
 
@@ -168,12 +169,10 @@ public class ImportSingleCharacterWindow : EditorWindow
                     {
                         if (GUILayout.Button("Import"))
                         {
-                            SpriteImport.ImportCharacter(testSprite, palette);
+                            SpriteImport.ImportCharacter(testSprite, palette, fShowCreatedSprites);
                         }
-                        if (GUILayout.Button("Import efficient"))
-                        {
-                            SpriteImport.ImportCharacterEfficient(testSprite);
-                        }
+                        
+                        fShowCreatedSprites = GUILayout.Toggle(fShowCreatedSprites, "Show created Sprites");
                     }
 
                     GUILayout.EndVertical();
