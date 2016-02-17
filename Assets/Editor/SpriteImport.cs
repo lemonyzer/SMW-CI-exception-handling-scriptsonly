@@ -54,7 +54,7 @@ public class SpriteImport {
             //TeamColor.ChangeColors(TeamColor.referenceColorsVerzweigt[i], textureWithAlpha);
             // Full Palette
             tempTexture.SetPixels (textureWithAlpha.GetPixels());
-            palette.ChangeColors(i, tempTexture);
+            palette.ChangeColorsFast(i, tempTexture);
 
             // Save as PNG
             Sprite teamSpritesheet = SaveTextureAsSprite(tempTexture, uniqueTeamAssetPath);

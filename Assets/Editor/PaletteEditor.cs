@@ -2,6 +2,7 @@
 using System.Collections;
 
 using UnityEditor;
+using System;
 
 [CustomEditor(typeof(Palette))]
 public class PaletteEditor : Editor {
@@ -24,11 +25,11 @@ public class PaletteEditor : Editor {
 
     void OnSceneGUI()
     {
-        // Handles for Scene View
- //       Handles.color = targetObject.myColor;
-        //		Handles.CubeCap (0, targetObject.transform.position, targetObject.transform.rotation, targetObject.handleSize);
- //       Handles.SphereCap(0, targetObject.transform.position, targetObject.transform.rotation, targetObject.handleSize);
- //       Handles.Label(targetObject.transform.position + new Vector3(0f, targetObject.handleSize, 0f), targetObject.name);
+        //Handles for Scene View
+        //Handles.color = targetObject.myColor;
+        //Handles.CubeCap (0, targetObject.transform.position, targetObject.transform.rotation, targetObject.handleSize);
+        //Handles.SphereCap(0, targetObject.transform.position, targetObject.transform.rotation, targetObject.handleSize);
+        //Handles.Label(targetObject.transform.position + new Vector3(0f, targetObject.handleSize, 0f), targetObject.name);
 
         // 2D GUI for Scene View
         Handles.BeginGUI();
@@ -45,6 +46,8 @@ public class PaletteEditor : Editor {
     bool fTeamBlue = true;
 
     Vector2 teamSliderPosition;
+    private bool fViewTeamPaletteCached;
+    private bool fViewTeamPaletteSlow;
 
     void GUIElemts()
     {
@@ -54,49 +57,143 @@ public class PaletteEditor : Editor {
             {
                 targetObject.InitPalette();
             }
-
-            teamSliderPosition = EditorGUILayout.BeginScrollView(teamSliderPosition);
+            fViewTeamPaletteCached = EditorGUILayout.Foldout(fViewTeamPaletteCached, "View Team Palette from cached List");
+            if (fViewTeamPaletteCached)
             {
-                GUILayout.BeginHorizontal();
-                {
-                    int teamNr = 0;
-                    fTeamRed = EditorGUILayout.Foldout(fTeamRed, "Rot");
-                    if (fTeamRed)
-                    {
-                        GUITeamPalette(teamNr++);
-                    }
-
-                    fTeamGreen = EditorGUILayout.Foldout(fTeamGreen, "Grün");
-                    if (fTeamGreen)
-                    {
-                        GUITeamPalette(teamNr++);
-                    }
-
-                    fTeamYellow = EditorGUILayout.Foldout(fTeamYellow, "Gelb");
-                    if (fTeamYellow)
-                    {
-                        GUITeamPalette(teamNr++);
-                    }
-
-                    fTeamBlue = EditorGUILayout.Foldout(fTeamBlue, "Blau");
-                    if (fTeamBlue)
-                    {
-                        GUITeamPalette(teamNr++);
-                    }
-                }
-                GUILayout.EndHorizontal();
+                GUI_ViewTeamPaletteCached();
             }
-            EditorGUILayout.EndScrollView();
+            fViewTeamPaletteSlow = EditorGUILayout.Foldout(fViewTeamPaletteSlow, "View Team Palette from Array");
+            if (fViewTeamPaletteSlow)
+            {
+                GUI_ViewTeamPaletteSlow();
+            }
+
         }
         GUILayout.EndVertical();
 
     }
 
-    void GUITeamPalette (int teamId)
+    private void GUI_ViewTeamPaletteCached()
+    {
+
+        GUILayout.BeginHorizontal();
+        {
+            // Header
+            GUILayout.Label("ref"); // ref Color Header
+            for (int i=0; i<(int)Teams.count; i++)
+            {
+                GUILayout.Label("" +(Teams)i);  // team Color Header
+            }
+        }
+        GUILayout.EndHorizontal();
+
+        teamSliderPosition = EditorGUILayout.BeginScrollView(teamSliderPosition);
+        {
+            GUILayout.BeginHorizontal();
+            {
+                // Reference Color Palette
+                GUIReferencePalette();
+
+                int teamNr = 0;
+                //fTeamRed = EditorGUILayout.Foldout(fTeamRed, "");
+                if (fTeamRed)
+                {
+                    GUITeamPaletteCached(teamNr++);
+                }
+
+                //fTeamGreen = EditorGUILayout.Foldout(fTeamGreen, "");
+                if (fTeamGreen)
+                {
+                    GUITeamPaletteCached(teamNr++);
+                }
+
+                //fTeamYellow = EditorGUILayout.Foldout(fTeamYellow, "");
+                if (fTeamYellow)
+                {
+                    GUITeamPaletteCached(teamNr++);
+                }
+
+                //fTeamBlue = EditorGUILayout.Foldout(fTeamBlue, "");
+                if (fTeamBlue)
+                {
+                    GUITeamPaletteCached(teamNr++);
+                }
+            }
+            GUILayout.EndHorizontal();
+        }
+        EditorGUILayout.EndScrollView();
+    }
+
+    private void GUI_ViewTeamPaletteSlow()
+    {
+        GUILayout.BeginHorizontal();
+        {
+            for (int i = 0; i < (int)Teams.count; i++)
+            {
+                GUILayout.Label("" + (Teams)i);
+            }
+        }
+        GUILayout.EndHorizontal();
+
+        teamSliderPosition = EditorGUILayout.BeginScrollView(teamSliderPosition);
+        {
+            GUILayout.BeginHorizontal();
+            {
+                int teamNr = 0;
+                //fTeamRed = EditorGUILayout.Foldout(fTeamRed, "Rot");
+                if (fTeamRed)
+                {
+                    GUITeamPaletteSlow(teamNr++);
+                }
+
+                //fTeamGreen = EditorGUILayout.Foldout(fTeamGreen, "Grün");
+                if (fTeamGreen)
+                {
+                    GUITeamPaletteSlow(teamNr++);
+                }
+
+                //fTeamYellow = EditorGUILayout.Foldout(fTeamYellow, "Gelb");
+                if (fTeamYellow)
+                {
+                    GUITeamPaletteSlow(teamNr++);
+                }
+
+                //fTeamBlue = EditorGUILayout.Foldout(fTeamBlue, "Blau");
+                if (fTeamBlue)
+                {
+                    GUITeamPaletteSlow(teamNr++);
+                }
+            }
+            GUILayout.EndHorizontal();
+        }
+        EditorGUILayout.EndScrollView();
+    }
+
+    void GUIReferencePalette ()
     {
         GUILayout.BeginVertical();
 
-        Color[] teamColorPalette = targetObject.GetTeamColorPalette (teamId);
+        Color[] colorPalette = targetObject.RawReferenceColorPalette;
+
+        if (colorPalette == null)
+        {
+            GUILayout.Label(targetObject.ToString() + " RawReferenceColorPalettet == NULL");
+        }
+        else
+        {
+            for (int i = 0; i < colorPalette.Length; i++)
+            {
+                EditorGUILayout.ColorField(colorPalette[i]);
+            }
+        }
+        GUILayout.EndVertical();
+    }
+
+    void GUITeamPaletteSlow (int teamId)
+    {
+        GUILayout.BeginVertical();
+
+        Color[] teamColorPalette = targetObject.GetTeamColorPaletteSlow (teamId);
 
         if (teamColorPalette == null)
         {
@@ -105,6 +202,26 @@ public class PaletteEditor : Editor {
         else
         {
             for (int i=0; i< teamColorPalette.Length; i++)
+            {
+                EditorGUILayout.ColorField(teamColorPalette[i]);
+            }
+        }
+        GUILayout.EndVertical();
+    }
+
+    void GUITeamPaletteCached (int teamId)
+    {
+        GUILayout.BeginVertical();
+
+        Color[] teamColorPalette = targetObject.GetTeamColorPaletteFromList(teamId);
+
+        if (teamColorPalette == null)
+        {
+            GUILayout.Label((Teams)teamId + " == NULL");
+        }
+        else
+        {
+            for (int i = 0; i < teamColorPalette.Length; i++)
             {
                 EditorGUILayout.ColorField(teamColorPalette[i]);
             }

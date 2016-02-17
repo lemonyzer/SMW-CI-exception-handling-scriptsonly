@@ -168,7 +168,7 @@ public class ImportSingleCharacterWindow : EditorWindow
 
         if (GUILayout.Button("ChangeColor full (copy&edit)"))
         {
-            palette.ChangeColors((int)slectedTeam, preparedSpritesheet.texture);
+            palette.ChangeColorsFast((int)slectedTeam, preparedSpritesheet.texture);
             // TODO replace with
             // preparedTeamSpritesheet = SpriteImport.CreateTeamSprite(slectedTeam, preparedSpritesheet);
         }
