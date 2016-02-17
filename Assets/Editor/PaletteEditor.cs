@@ -3,6 +3,7 @@ using System.Collections;
 
 using UnityEditor;
 using System;
+using SMW;
 
 [CustomEditor(typeof(Palette))]
 public class PaletteEditor : Editor {
