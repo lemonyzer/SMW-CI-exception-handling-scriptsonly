@@ -8,7 +8,7 @@ using System.IO;
 
 public class SpriteImport {
 
-    public static void ImportCharacter(Sprite originalSprite, Palette palette, bool fCreatePreview)
+    public static void ImportCharacter(Sprite originalSprite, Palette palette, bool fCreatePreview, Vector3 previewPos = default(Vector3))
     {
         if (originalSprite == null)
         {
@@ -47,7 +47,7 @@ public class SpriteImport {
         for (int i=0; i<(int)Teams.count; i++)
         {
             // Generate Unique Asset Path for new Texture
-            string teamAssetPath = Path.GetDirectoryName(spriteAssetPath) + "/" + Path.GetFileNameWithoutExtension(spriteAssetPath) + "_ARGB32_" + (Teams)i + Path.GetExtension(spriteAssetPath);
+            string teamAssetPath = Path.GetDirectoryName(spriteAssetPath) + "/" + Path.GetFileNameWithoutExtension(spriteAssetPath) + "_ARGB32_" + (Teams)i + ".png";
             string uniqueTeamAssetPath = AssetDatabase.GenerateUniqueAssetPath(teamAssetPath);
 
             //TeamColor.ChangeColors(TeamColor.referenceColors[i], textureWithAlpha);
@@ -65,7 +65,7 @@ public class SpriteImport {
             if (fCreatePreview)
             {
                 GameObject preview = new GameObject("Preview " + i);
-                preview.transform.position = new Vector2(-2, 0) + Vector2.right * i;
+                preview.transform.position = previewPos + new Vector3(-2, 0, 0) + Vector3.right * i;
                 SpriteRenderer renderer = preview.AddComponent<SpriteRenderer>();
                 renderer.sprite = teamSpritesheet;
             }
@@ -74,6 +74,22 @@ public class SpriteImport {
         UnityEngine.Object.DestroyImmediate(tempTexture);
         UnityEngine.Object.DestroyImmediate(textureWithAlpha);
     }
+
+    // TODO
+    //public static void CreateTeamSprite (Teams team, Sprite preparedSpritesheet)
+    //{
+    //    //TeamColor.ChangeColors(TeamColor.referenceColors[i], textureWithAlpha);
+    //    //TeamColor.ChangeColors(TeamColor.referenceColorsVerzweigt[i], textureWithAlpha);
+    //    // Full Palette
+    //    tempTexture.SetPixels(textureWithAlpha.GetPixels());
+    //    palette.ChangeColors(i, tempTexture);
+
+    //    // Save as PNG
+    //    Sprite teamSpritesheet = SaveTextureAsSprite(tempTexture, uniqueTeamAssetPath);
+
+    //    // Apply Import Settings, and Slice
+    //    SetRawCharacterSpriteSheetTextureImporter(teamSpritesheet, false, true, true);
+    //}
 
     public static void ImportCharacterEfficient(Sprite originalSprite)
     {
@@ -257,6 +273,9 @@ public class SpriteImport {
         //Apply Texture Import Settings
         texImporter.SetTextureSettings(texImportSettings);
 
+        // Test
+        // texImporter.SaveAndReimport();
+
         //Save changes
         AssetDatabase.ImportAsset(spriteAssetPath, ImportAssetOptions.ForceUpdate);
         AssetDatabase.Refresh();
@@ -348,7 +367,10 @@ public class SpriteImport {
             }
         }
 
-        return metaDataList;
+        if (failed)
+            return null;
+        else
+            return metaDataList;
     }
 
     //SpriteEditorUtility

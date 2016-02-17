@@ -2,6 +2,9 @@
 using System.Collections;
 
 using UnityEditor;
+using System.Collections.Generic;
+using System.IO;
+using System;
 
 public class ImportSingleCharacterWindow : EditorWindow
 {
@@ -53,25 +56,10 @@ public class ImportSingleCharacterWindow : EditorWindow
 
     Palette palette;
     SmwCharacter testCharacter;
-    Sprite testSprite;
+    Sprite rawSpritesheet;
+    Sprite preparedSpritesheet;
+    Sprite preparedTeamSpritesheet;
     Color testColor;
-
-    public  Color32 redDark = new Color32(128, 0, 0, 255);
-    public  Color32 redMiddel = new Color32(192, 0, 0, 255);
-    public  Color32 redLight = new Color32(255, 0, 0, 255);
-    public  Color32 redLight32 = new Color32((byte)255, (byte)0, (byte)0, (byte)255);
-
-    public  Color32 greenDark = new Color32(90, 146, 0, 255);
-    public  Color32 greenMiddel = new Color32(128, 178, 0, 255);
-    public  Color32 greenLight = new Color32(165, 219, 0, 255);
-
-    public  Color32 yellowDark = new Color32(214, 101, 0, 255);
-    public  Color32 yellowMiddel = new Color32(247, 158, 0, 255);
-    public  Color32 yellowLight = new Color32(255, 211, 16, 255);
-
-    public  Color32 blueDark = new Color32(41, 73, 132, 255);
-    public  Color32 blueMiddel = new Color32(57, 113, 173, 255);
-    public  Color32 blueLight = new Color32(74, 154, 214, 255);
 
     Teams slectedTeam = Teams.yellow;
 
@@ -88,107 +76,32 @@ public class ImportSingleCharacterWindow : EditorWindow
             GUILayout.BeginVertical();
             {
                 GUILayout.Space(10);
-                GUILayout.Label("SMW Single Character Importer", EditorStyles.boldLabel);
+                GUILayout.Label("SMW Character Importer", EditorStyles.boldLabel);
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.BeginVertical();
-                    //redDark = EditorGUILayout.ColorField(redDark);
-                    //redMiddel = EditorGUILayout.ColorField(redMiddel);
-                    //redLight = EditorGUILayout.ColorField(redLight);
-                    //greenDark = EditorGUILayout.ColorField(greenDark);
-                    //greenMiddel = EditorGUILayout.ColorField(greenMiddel);
-                    //greenLight = EditorGUILayout.ColorField(greenLight);
-                    //yellowDark = EditorGUILayout.ColorField(yellowDark);
-                    //yellowMiddel = EditorGUILayout.ColorField(yellowMiddel);
-                    //yellowLight = EditorGUILayout.ColorField(yellowLight);
-                    //blueDark = EditorGUILayout.ColorField(blueDark);
-                    //blueMiddel = EditorGUILayout.ColorField(blueMiddel);
-                    //blueLight = EditorGUILayout.ColorField(blueLight);
 
                     palette = EditorGUILayout.ObjectField("Palette", palette, typeof(Palette), false) as Palette;
-
-
-                    testSprite = EditorGUILayout.ObjectField("RAW Character Spritesheet", testSprite, typeof(Sprite), false) as Sprite;
-                    if (testSprite != null)
+                    if (palette != null)
                         GUI.enabled = true;
                     else
                         GUI.enabled = false;
 
-                    //OnGUI_SO_Test();
-
-                    fStepByStep = EditorGUILayout.Foldout(fStepByStep, "Step-By-Step Import");
-                    if (fStepByStep)
+                    fBatchImport = EditorGUILayout.Foldout(fBatchImport, "Batch Import");
+                    if (fBatchImport)
                     {
-
-                        if (GUILayout.Button("SetImportSettings"))
-                        {
-                            SpriteImport.SetRawCharacterSpriteSheetTextureImporter(testSprite, true, false, false);
-                        }
-                        if (GUILayout.Button("CreatePNG"))
-                        {
-                            testSprite = SpriteImport.CreateGenericCharacterSpriteSheet(testSprite);
-                        }
-
-                        slectedTeam = (Teams)EditorGUILayout.EnumPopup("Team", slectedTeam);
-                        if (slectedTeam == Teams.count)
-                            slectedTeam = Teams.yellow;
-
-                        if (GUILayout.Button("ChangeColor old"))
-                        {
-                            TeamColor.ChangeColors(TeamColor.referenceColorsVerzweigt[(int)slectedTeam], testSprite.texture);
-                        }
-
-                        if (GUILayout.Button("ChangeColor full"))
-                        {
-                            palette.ChangeColors((int)slectedTeam, testSprite.texture);
-                        }
-
-                        if (GUILayout.Button("Save"))
-                        {
-                            testSprite.texture.Apply();
-                            EditorUtility.SetDirty(testSprite);
-                            EditorUtility.SetDirty(testSprite.texture);
-
-                            AssetDatabase.StartAssetEditing();
-                            EditorUtility.SetDirty(testSprite);
-                            EditorUtility.SetDirty(testSprite.texture);
-                            AssetDatabase.StopAssetEditing();
-
-                            AssetDatabase.SaveAssets();
-                            AssetDatabase.Refresh();
-                        }
-
-                        if (GUILayout.Button("ReImport"))
-                        {
-                            AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(testSprite));
-                        }
+                        OnGUI_BatchImport();
                     }
 
-                    fFull = EditorGUILayout.Foldout(fFull, "Full Import");
-                    if (fFull)
+                    fSingleImport = EditorGUILayout.Foldout(fSingleImport, "Single Import");
+                    if (fSingleImport)
                     {
-                        if (GUILayout.Button("Import"))
-                        {
-                            SpriteImport.ImportCharacter(testSprite, palette, fShowCreatedSprites);
-                        }
-                        
-                        fShowCreatedSprites = GUILayout.Toggle(fShowCreatedSprites, "Show created Sprites");
+                        OnGUI_SingleImport();
                     }
 
                     GUILayout.EndVertical();
                 }
                 GUILayout.EndHorizontal();
-                GUILayout.Space(10);
-                GUILayout.Label("Current Tileset", EditorStyles.boldLabel);
-                GUILayout.Space(10);
-                GUILayout.Label("Tileset Tile Preview", EditorStyles.boldLabel);
-
-                if (GUILayout.Button("Show Tile (NewSprite)", GUILayout.ExpandWidth(false)))
-                {
-                }
-                if (GUILayout.Button("Show Tile (AssetSlicedSprite)", GUILayout.ExpandWidth(false)))
-                {
-                }
             }
             GUILayout.EndVertical();
         }
@@ -196,34 +109,225 @@ public class ImportSingleCharacterWindow : EditorWindow
         //		Repaint();
     }
 
-    void OnGUI_SO_Test ()
+    private void OnGUI_SingleImport ()
     {
-        testCharacter = EditorGUILayout.ObjectField("Character", testCharacter, typeof(SmwCharacter), false) as SmwCharacter;
+        rawSpritesheet = EditorGUILayout.ObjectField("RAW Character Spritesheet", rawSpritesheet, typeof(Sprite), false, GUILayout.ExpandWidth(true)) as Sprite;
+        if (rawSpritesheet != null)
+        {
+            Rect controlRect = EditorGUILayout.GetControlRect(true, rawSpritesheet.texture.height, GUILayout.ExpandWidth(false));
+            EditorGUI.DrawPreviewTexture(controlRect, rawSpritesheet.texture);
+            GUI.enabled = true;
+        }
+        else
+            GUI.enabled = false;
+
+
 
         fStepByStep = EditorGUILayout.Foldout(fStepByStep, "Step-By-Step Import");
         if (fStepByStep)
         {
+            OnGUI_SingleStepByStepImport();
+        }
 
-            if (GUILayout.Button("SetImportSettings"))
-            {
-                SpriteImport.SetRawCharacterSpriteSheetTextureImporter(testCharacter.sprite, true, false, false);
-            }
-            if (GUILayout.Button("CreatePNG"))
-            {
-                testSprite = SpriteImport.CreateGenericCharacterSpriteSheet(testCharacter.sprite);
-            }
-
-            slectedTeam = (Teams)EditorGUILayout.EnumPopup("Team", slectedTeam);
-
-            if (GUILayout.Button("ChangeColor"))
-            {
-                TeamColor.ChangeColors(TeamColor.referenceColorsVerzweigt[(int)slectedTeam], testCharacter.sprite.texture);
-            }
-
-            if (GUILayout.Button("ReImport"))
-            {
-                AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(testCharacter.sprite));
-            }
+        fFull = EditorGUILayout.Foldout(fFull, "Auto Import");
+        if (fFull)
+        {
+            OnGUI_SingleAutoImport();
         }
     }
+
+    private void OnGUI_SingleStepByStepImport()
+    {
+        if (GUILayout.Button("SetImportSettings"))
+        {
+            rawSpritesheet = SpriteImport.SetRawCharacterSpriteSheetTextureImporter(rawSpritesheet, true, false, false);
+        }
+        if (GUILayout.Button("CreatePNG"))
+        {
+            preparedSpritesheet = SpriteImport.CreateGenericCharacterSpriteSheet(rawSpritesheet);
+        }
+
+        preparedSpritesheet = EditorGUILayout.ObjectField("Prepared Character Spritesheet", preparedSpritesheet, typeof(Sprite), false) as Sprite;
+        if (preparedSpritesheet != null)
+        {
+            Rect controlRect = EditorGUILayout.GetControlRect(true, preparedSpritesheet.texture.height, GUILayout.ExpandWidth(false));
+            EditorGUI.DrawTextureTransparent(controlRect, preparedSpritesheet.texture);
+            GUI.enabled = true;
+        }
+        else
+            GUI.enabled = false;
+
+        slectedTeam = (Teams)EditorGUILayout.EnumPopup("Team", slectedTeam);
+        if (slectedTeam == Teams.count)
+            slectedTeam = Teams.yellow;
+
+        if (GUILayout.Button("ChangeColor old"))
+        {
+            TeamColor.ChangeColors(TeamColor.referenceColorsVerzweigt[(int)slectedTeam], preparedSpritesheet.texture);
+        }
+
+        if (GUILayout.Button("ChangeColor full (copy&edit)"))
+        {
+            palette.ChangeColors((int)slectedTeam, preparedSpritesheet.texture);
+            // TODO replace with
+            // preparedTeamSpritesheet = SpriteImport.CreateTeamSprite(slectedTeam, preparedSpritesheet);
+        }
+
+        preparedTeamSpritesheet = EditorGUILayout.ObjectField("Prepared Team Spritesheet", preparedTeamSpritesheet, typeof(Sprite), false) as Sprite;
+        if (preparedTeamSpritesheet != null)
+        {
+            Rect controlRect = EditorGUILayout.GetControlRect(true, preparedTeamSpritesheet.texture.height, GUILayout.ExpandWidth(false));
+            EditorGUI.DrawTextureTransparent(controlRect, preparedTeamSpritesheet.texture);
+            GUI.enabled = true;
+        }
+        else
+            GUI.enabled = false;
+
+
+        if (GUILayout.Button("Save"))
+        {
+            preparedSpritesheet.texture.Apply();
+            EditorUtility.SetDirty(preparedSpritesheet);
+            EditorUtility.SetDirty(preparedSpritesheet.texture);
+
+            AssetDatabase.StartAssetEditing();
+            EditorUtility.SetDirty(preparedSpritesheet);
+            EditorUtility.SetDirty(preparedSpritesheet.texture);
+            AssetDatabase.StopAssetEditing();
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+
+        if (GUILayout.Button("ReImport"))
+        {
+            AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(preparedSpritesheet));
+        }
+    }
+
+    private void OnGUI_SingleAutoImport()
+    {
+        if (GUILayout.Button("Import"))
+        {
+            SpriteImport.ImportCharacter(rawSpritesheet, palette, fShowCreatedSprites);
+        }
+
+        fShowCreatedSprites = GUILayout.Toggle(fShowCreatedSprites, "Show created Sprites");
+    }
+
+    string batch_ImportPath = "";
+    string batch_LastWorkingImportPath = "";
+    string EP_lastBatchImportFolder = "EP_lastBatchImportFolder";
+    //FileInfo[] window_Batch_FileInfo;
+    static IEnumerable<FileInfo> window_Batch_FileInfos;
+    string[] extensions = new string[] { ".png", ".bmp" };
+
+
+    void DebugFiles (DirectoryInfo dirInfo, IEnumerable<FileInfo> files)
+    {
+        Debug.Log("FullName= " + dirInfo.FullName);
+        Debug.Log("Name= " + dirInfo.Name);
+        foreach (FileInfo item in files)
+        {
+            Debug.Log(item.Name);
+        }
+    }
+
+    void OnGUI_BatchImport()
+    {
+        if (GUILayout.Button("Select Import Folder"))
+        {
+            // open folder dialog
+            batch_ImportPath = EditorUtility.OpenFolderPanel("Select Import Folder with Sprites", batch_LastWorkingImportPath, "");
+            if (!string.IsNullOrEmpty(batch_ImportPath))
+            {
+                batch_LastWorkingImportPath = batch_ImportPath;
+                //absolutenPath in EditorPrefs speichern 
+                EditorPrefs.SetString(EP_lastBatchImportFolder, batch_LastWorkingImportPath);
+
+                DirectoryInfo dirInfo = new DirectoryInfo(batch_ImportPath);
+                window_Batch_FileInfos = BatchImport.GetFilesByExtensions(dirInfo, extensions);
+                DebugFiles(dirInfo, window_Batch_FileInfos);
+                //window_Batch_FileInfo = BatchImport.GetFileList(batch_ImportPath, ".png");
+                GUI.enabled = true;
+            }
+            else
+            {
+                //WITCHTIG!!!!!!!!!!
+                batch_ImportPath = "";
+                //window_Batch_FileInfo = null;
+                GUI.enabled = false;
+            }
+        }
+        if (GUILayout.Button ("Start Batch Import"))
+        {
+            StartBatchImport(new DirectoryInfo(batch_ImportPath), palette);
+        }
+    }
+
+    Vector3 previewPosition = Vector3.zero;
+    private bool fBatchImport;
+    private bool fSingleImport;
+
+    void StartBatchImport(DirectoryInfo dirInfo, Palette palette)
+    {
+
+        IEnumerable<FileInfo> files = BatchImport.GetFilesByExtensions(dirInfo, extensions);
+
+        foreach (FileInfo f in files)
+        {
+            // relative pfad angabe
+            string currentSpritePath = f.FullName.Substring(Application.dataPath.Length - "Assets".Length);
+            Debug.Log("Found " + currentSpritePath);
+
+            Sprite currentSprite = null;
+            TextureImporter spriteImporter = null;
+            spriteImporter = TextureImporter.GetAtPath(currentSpritePath) as TextureImporter;
+            if (spriteImporter == null)
+            {
+                Debug.LogError(currentSpritePath + " TextureImporter == null ");
+                continue;       // skip this character
+            }
+            else
+            {
+                currentSprite = AssetDatabase.LoadAssetAtPath(spriteImporter.assetPath, typeof(Sprite)) as Sprite;
+                // PerformMetaSlice
+                previewPosition.y--;
+                SpriteImport.ImportCharacter(currentSprite, palette, true, previewPosition);
+            }
+        }
+
+    }
+
+    //void OnGUI_SO_Test ()
+    //{
+    //    testCharacter = EditorGUILayout.ObjectField("Character", testCharacter, typeof(SmwCharacter), false) as SmwCharacter;
+
+    //    fStepByStep = EditorGUILayout.Foldout(fStepByStep, "Step-By-Step Import");
+    //    if (fStepByStep)
+    //    {
+
+    //        if (GUILayout.Button("SetImportSettings"))
+    //        {
+    //            SpriteImport.SetRawCharacterSpriteSheetTextureImporter(testCharacter.sprite, true, false, false);
+    //        }
+    //        if (GUILayout.Button("CreatePNG"))
+    //        {
+    //            preparedSpritesheet = SpriteImport.CreateGenericCharacterSpriteSheet(testCharacter.sprite);
+    //        }
+
+    //        slectedTeam = (Teams)EditorGUILayout.EnumPopup("Team", slectedTeam);
+
+    //        if (GUILayout.Button("ChangeColor"))
+    //        {
+    //            TeamColor.ChangeColors(TeamColor.referenceColorsVerzweigt[(int)slectedTeam], testCharacter.sprite.texture);
+    //        }
+
+    //        if (GUILayout.Button("ReImport"))
+    //        {
+    //            AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(testCharacter.sprite));
+    //        }
+    //    }
+    //}
+
 }
