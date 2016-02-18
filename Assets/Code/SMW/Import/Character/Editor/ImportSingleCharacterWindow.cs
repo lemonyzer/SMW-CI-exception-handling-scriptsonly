@@ -8,6 +8,7 @@ using System;
 using UnityEnhancements;
 using SMW;
 using SMW.Import.Character;
+using SMW.Import;
 
 public class ImportSingleCharacterWindow : EditorWindow
 {
@@ -19,21 +20,6 @@ public class ImportSingleCharacterWindow : EditorWindow
         Palette newAsset = ScriptableObject.CreateInstance<Palette>();
 
         string path = "Assets/newPaletteSO.asset";
-        AssetDatabase.CreateAsset(newAsset, AssetDatabase.GenerateUniqueAssetPath(path));
-        AssetDatabase.SaveAssets();
-
-        EditorUtility.FocusProjectWindow();
-        Selection.activeObject = newAsset;
-
-        return newAsset;
-    }
-
-    [MenuItem("SMW/ScriptableObject/SmwCharacter", false, 1)]
-    public static SmwCharacter CreateSmwCharacter()
-    {
-        SmwCharacter newAsset = ScriptableObject.CreateInstance<SmwCharacter>();
-
-        string path = "Assets/newSmwCharacterSO.asset";
         AssetDatabase.CreateAsset(newAsset, AssetDatabase.GenerateUniqueAssetPath(path));
         AssetDatabase.SaveAssets();
 
@@ -65,7 +51,6 @@ public class ImportSingleCharacterWindow : EditorWindow
     }
 
     Palette palette;
-    SmwCharacter testCharacter;
     Sprite rawSpritesheet;
     Sprite preparedSpritesheet;
     Sprite preparedTeamSpritesheet;

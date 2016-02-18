@@ -9,7 +9,7 @@ using UnityEditor;
 using System;
 using System.IO;
 
-namespace SMW.Import.Character
+namespace SMW.Import
 {
 
     public class SpriteImport
@@ -85,8 +85,8 @@ namespace SMW.Import.Character
 
             string workingFolder = Path.GetDirectoryName(rawSpriteAssetPath);
             string parentFolder = Path.GetDirectoryName(workingFolder);
-            string assetFileName = Path.GetFileNameWithoutExtension(rawSpriteAssetPath) + "_" + (Teams)teamId + "_ARGB32_" + ".png";
-            // !!!important!!! Order: originalName + _Team_ + "_ARGB32_" 
+            string assetFileName = Path.GetFileNameWithoutExtension(rawSpriteAssetPath) + "_" + (Teams)teamId + "_ARGB32" + ".png";
+            // !!!important!!! Order: originalName + _Team_ + "_ARGB32.png" 
 
             // Generate Unique Asset Path for new Texture
             string teamAssetPath = parentFolder + "/" + assetFileName;

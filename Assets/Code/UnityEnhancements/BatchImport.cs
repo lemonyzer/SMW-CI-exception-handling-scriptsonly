@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using SMW.Import.Character;
 
 namespace UnityEnhancements
 {
