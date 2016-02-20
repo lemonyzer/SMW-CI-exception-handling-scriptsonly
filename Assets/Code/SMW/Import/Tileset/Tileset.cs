@@ -5,6 +5,7 @@ using UnityEngine;
 //using UnityEditor;
 using System.Collections;
 using SMW;
+using UnityEnhancements;
 //using System.Collections.Generic;
 
 #if UNITY_EDITOR
@@ -14,16 +15,19 @@ public class TilesetHelper
     [MenuItem("SMW/ScriptableObject/Tileset")]
     static Tileset CreateAsset ()
     {
-        Tileset newAsset = ScriptableObject.CreateInstance<Tileset>();
 
-        string path = "Assets/newTilesetSO.asset";
-        AssetDatabase.CreateAsset(newAsset, AssetDatabase.GenerateUniqueAssetPath(path));
-        AssetDatabase.SaveAssets();
+        return ScriptableObjectUtility.CreateAsset<Tileset>("Blubb");
 
-        EditorUtility.FocusProjectWindow();
-        Selection.activeObject = newAsset;
+        //Tileset newAsset = ScriptableObject.CreateInstance<Tileset>();
 
-        return newAsset;
+        //string path = "Assets/newTilesetSO.asset";
+        //AssetDatabase.CreateAsset(newAsset, AssetDatabase.GenerateUniqueAssetPath(path));
+        //AssetDatabase.SaveAssets();
+
+        //EditorUtility.FocusProjectWindow();
+        //Selection.activeObject = newAsset;
+
+        //return newAsset;
     }
 }
 #endif

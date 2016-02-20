@@ -27,11 +27,11 @@ public class WarpArrow : ScriptableObject {
 			return;
 		}
 		
-		if (warpArrows == null)
-				{
-				Debug.LogError (this.ToString () + " init warpArrows SpriteSheet", this);
-						return;
-				}
+		if (warpArrows == null || warpArrows.Count == 0)
+		{
+		    Debug.LogError (this.ToString () + " init warpArrows SpriteSheet", this);
+			return;
+		}
 
 		for (int i=0; i< 10; i++)
 		{

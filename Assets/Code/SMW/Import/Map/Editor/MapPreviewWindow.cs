@@ -28,17 +28,36 @@ public class MapPreviewWindow : EditorWindow {
 
 	#region Main Methods
 
-	public static Map Create(string mapName)
+    [MenuItem("SMW/ScriptableObject/Map")]
+    public static Map Create()
+    {
+
+
+        //		Map newMapAsset = ScriptableObject.CreateInstance<Map>();
+        //		newMapAsset.mapName = mapName;
+        //		AssetDatabase.CreateAsset(newMapAsset, "Assets/Maps/map_" + mapName + ".asset");
+        //		AssetDatabase.SaveAssets();
+
+        ////		EditorUtility.FocusProjectWindow();
+        //		Selection.activeObject = newMapAsset;
+
+        return UnityEnhancements.ScriptableObjectUtility.CreateAsset<Map>("Assets/Maps", "map_NoName");
+    }
+
+    public static Map Create(string mapName = "NoName")
 	{
-		Map newMapAsset = ScriptableObject.CreateInstance<Map>();
-		newMapAsset.mapName = mapName;
-		AssetDatabase.CreateAsset(newMapAsset, "Assets/Maps/map_" + mapName + ".asset");
-		AssetDatabase.SaveAssets();
-		
-//		EditorUtility.FocusProjectWindow();
-		Selection.activeObject = newMapAsset;
-		
-		return newMapAsset;
+
+
+        //		Map newMapAsset = ScriptableObject.CreateInstance<Map>();
+        //		newMapAsset.mapName = mapName;
+        //		AssetDatabase.CreateAsset(newMapAsset, "Assets/Maps/map_" + mapName + ".asset");
+        //		AssetDatabase.SaveAssets();
+
+        ////		EditorUtility.FocusProjectWindow();
+        //		Selection.activeObject = newMapAsset;
+
+        Map mapAsset = UnityEnhancements.ScriptableObjectUtility.CreateAsset<Map>("Assets/Maps", "map_" + mapName);
+        return mapAsset;
 	}
 
 	[MenuItem("SMW/Map/Preview Window")]

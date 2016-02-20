@@ -17,16 +17,16 @@ public class ImportSingleCharacterWindow : EditorWindow
     [MenuItem("SMW/ScriptableObject/Palette", false, 1)]
     public static Palette CreatePalette()
     {
-        Palette newAsset = ScriptableObject.CreateInstance<Palette>();
+        //Palette newAsset = ScriptableObject.CreateInstance<Palette>();
 
-        string path = "Assets/newPaletteSO.asset";
-        AssetDatabase.CreateAsset(newAsset, AssetDatabase.GenerateUniqueAssetPath(path));
-        AssetDatabase.SaveAssets();
+        //string path = "Assets/newPaletteSO.asset";
+        //AssetDatabase.CreateAsset(newAsset, AssetDatabase.GenerateUniqueAssetPath(path));
+        //AssetDatabase.SaveAssets();
 
-        EditorUtility.FocusProjectWindow();
-        Selection.activeObject = newAsset;
+        //EditorUtility.FocusProjectWindow();
+        //Selection.activeObject = newAsset;
 
-        return newAsset;
+        return UnityEnhancements.ScriptableObjectUtility.CreateAsset<Palette>("Assets/Palette", "Palette"); ;
     }
 
     [MenuItem("SMW/Import/Single Character",false,1)]

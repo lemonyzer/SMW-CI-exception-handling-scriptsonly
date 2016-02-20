@@ -22,36 +22,38 @@ public class TilesetWindow : EditorWindow {
 
 	public static Tileset CreateEmpty()
 	{
-		Tileset newTilesetAsset = ScriptableObject.CreateInstance<Tileset>();
+		//Tileset newTilesetAsset = ScriptableObject.CreateInstance<Tileset>();
 
-        string assetPath = "Assets/tileset_NewEmptySO.asset";
-        string assetUniquePath = AssetDatabase.GenerateUniqueAssetPath(assetPath);
+  //      string assetPath = "Assets/tileset_NewEmptySO.asset";
+  //      string assetUniquePath = AssetDatabase.GenerateUniqueAssetPath(assetPath);
 
-        AssetDatabase.CreateAsset(newTilesetAsset, assetUniquePath);
-		AssetDatabase.SaveAssets();
+  //      AssetDatabase.CreateAsset(newTilesetAsset, assetUniquePath);
+		//AssetDatabase.SaveAssets();
 		
-		//		EditorUtility.FocusProjectWindow();			// <-- Satck Overflow
-		Selection.activeObject = newTilesetAsset;
-		return newTilesetAsset;
-	}
+		////		EditorUtility.FocusProjectWindow();			// <-- Satck Overflow
+		//Selection.activeObject = newTilesetAsset;
+		//return newTilesetAsset;
+
+        return UnityEnhancements.ScriptableObjectUtility.CreateAsset<Tileset>("Assets/Maps", "newEmptyTiletset");
+    }
 	
 	public Tileset Create(string tilesetName, Sprite tilesetSprite, List<TileType> tileTypesList, Vector2 tilePivot)
 	{
-		Tileset newTilesetAsset = ScriptableObject.CreateInstance<Tileset>();
-		newTilesetAsset.tilesetName = tilesetName;
+		Tileset newTilesetAsset = UnityEnhancements.ScriptableObjectUtility.CreateAsset<Tileset>("Assets/Maps", "tileset_" + tilesetName);
+        newTilesetAsset.tilesetName = tilesetName;
 		newTilesetAsset.TilesetSprite = tilesetSprite;
 		if (tileTypesList != null)
 			newTilesetAsset.TileTypes = tileTypesList.ToArray();
 		newTilesetAsset.tilePivot = tilePivot;
 
-        string assetPath = "Assets/Maps/tileset_" + tilesetName + ".asset";  //TODO dateiname nur gültige zeichen
-        string assetUniquePath = AssetDatabase.GenerateUniqueAssetPath(assetPath);
+  //      string assetPath = "Assets/Maps/tileset_" + tilesetName + ".asset";  //TODO dateiname nur gültige zeichen
+  //      string assetUniquePath = AssetDatabase.GenerateUniqueAssetPath(assetPath);
 
-        AssetDatabase.CreateAsset(newTilesetAsset, assetUniquePath);
-		AssetDatabase.SaveAssets();
+  //      AssetDatabase.CreateAsset(newTilesetAsset, assetUniquePath);
+		//AssetDatabase.SaveAssets();
 		
-		//		EditorUtility.FocusProjectWindow();		// <-- Satck Overflow
-		Selection.activeObject = newTilesetAsset;
+		////		EditorUtility.FocusProjectWindow();		// <-- Satck Overflow
+		//Selection.activeObject = newTilesetAsset;
 		return newTilesetAsset;
 	}
 	

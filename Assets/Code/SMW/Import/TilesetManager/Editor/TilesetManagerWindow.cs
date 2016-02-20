@@ -15,17 +15,18 @@ public class TilesetManagerWindow : EditorWindow {
 
 	#region Main Methods
 
-	[MenuItem("SMW/Tileset Manager Create")]
+	[MenuItem("SMW/ScriptableObject/Tileset Manager Create")]
 	public static void Create()
 	{
-		TilesetManager newTilesetAsset = ScriptableObject.CreateInstance<TilesetManager>();
+        //TilesetManager newTilesetAsset = ScriptableObject.CreateInstance<TilesetManager>();
 
-		AssetDatabase.CreateAsset(newTilesetAsset, "Assets/Maps/newTiletsetManagerSO.asset");
-		AssetDatabase.SaveAssets();
-		
-		EditorUtility.FocusProjectWindow();
-		Selection.activeObject = newTilesetAsset;
-	}
+        //AssetDatabase.CreateAsset(newTilesetAsset, "Assets/Maps/newTiletsetManagerSO.asset");
+        //AssetDatabase.SaveAssets();
+
+        //EditorUtility.FocusProjectWindow();
+        //Selection.activeObject = newTilesetAsset;
+        UnityEnhancements.ScriptableObjectUtility.CreateAsset<TilesetManager>("Assets/TilesetManager", "TiletsetManager");
+    }
 
 	[MenuItem("SMW/Tileset Manager Window")]
 	public static void Init()
