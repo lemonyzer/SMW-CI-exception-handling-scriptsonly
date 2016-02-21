@@ -126,7 +126,7 @@ public class TilesetWindow : EditorWindow {
 						w_ReplacementColor = EditorGUILayout.ColorField("Replacement Color:", w_ReplacementColor);
 						if(w_TilesetSprite == null)
 							GUI.enabled = false;
-						if(GUILayout.Button("Prepare Sprite Texture"))
+						if(GUILayout.Button("Prepare Sprite Texture (add Alpha, replace Color)"))
 						{
 							w_TilesetSprite = PrepareSpriteTexture(w_TilesetSprite, 32, w_TargetColor, w_ReplacementColor);
 						}
@@ -220,25 +220,27 @@ public class TilesetWindow : EditorWindow {
 							}
 						}
 						GUILayout.BeginHorizontal ();
-						if (GUILayout.Button("Create Tileset from Sprite & TLS File", GUILayout.ExpandWidth(false)))
-						{
-							currentTileset = Create(w_TilesetName, w_TilesetSprite, w_TilesetTileTypesList, GetPivotValue(w_TileSpriteAlignment, w_customTilePivotOffset));
-							//							EditorUtility.FocusProjectWindow();							<-- Satck Overflow
-							//							Selection.activeObject = currentTileset;
-						}
-						bool lastState = GUI.enabled;
-						if (true)
-						{
-							//TODO
-							GUI.enabled = true;
-						}
-						if (GUILayout.Button("Create Tileset from Sprite without TLS File", GUILayout.ExpandWidth(false)))
-						{
-							currentTileset = Create(w_TilesetName, w_TilesetSprite, null, GetPivotValue(w_TileSpriteAlignment, w_customTilePivotOffset));
-							//							EditorUtility.FocusProjectWindow();							<-- Satck Overflow
-							//							Selection.activeObject = currentTileset;
-						}
-						GUI.enabled = lastState;
+                        {
+                            if (GUILayout.Button("Create Tileset from Sprite & TLS File", GUILayout.ExpandWidth(false)))
+                            {
+                                currentTileset = Create(w_TilesetName, w_TilesetSprite, w_TilesetTileTypesList, GetPivotValue(w_TileSpriteAlignment, w_customTilePivotOffset));
+                                //							EditorUtility.FocusProjectWindow();							<-- Satck Overflow
+                                //							Selection.activeObject = currentTileset;
+                            }
+                            bool lastState = GUI.enabled;
+                            if (true)
+                            {
+                                //TODO
+                                GUI.enabled = true;
+                            }
+                            if (GUILayout.Button("Create Tileset from Sprite without TLS File", GUILayout.ExpandWidth(false)))
+                            {
+                                currentTileset = Create(w_TilesetName, w_TilesetSprite, null, GetPivotValue(w_TileSpriteAlignment, w_customTilePivotOffset));
+                                //							EditorUtility.FocusProjectWindow();							<-- Satck Overflow
+                                //							Selection.activeObject = currentTileset;
+                            }
+                            GUI.enabled = lastState;
+                        }
 						GUILayout.EndHorizontal ();
 					}
 					GUILayout.EndVertical();
