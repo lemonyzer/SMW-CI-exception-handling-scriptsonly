@@ -48,4 +48,28 @@ public class Hazards : ScriptableObject {
 			return list[index];
 		return null;
 	}
+
+	public void InitHazards ()
+	{
+		list = new List<Hazard> ();
+		for (int i = 0; i < (int)HazardType.count; i++)
+		{
+			Hazard newHazard = new Hazard ();
+			newHazard.Name = "" + (HazardType)i;
+			newHazard.type = (HazardType)i;
+			list.Add (newHazard);
+		}
+		EditorUtility.SetDirty (this);
+	}
+
+	public void InitNaming ()
+	{
+		for (int i = 0; i < GetAmount (); i++)
+		{
+			Hazard current = list [i];
+			if (current != null)
+				current.Name = "" + current.type;
+		}
+		EditorUtility.SetDirty (this);
+	}
 }
