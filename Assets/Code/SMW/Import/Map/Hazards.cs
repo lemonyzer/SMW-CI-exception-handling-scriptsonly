@@ -2,6 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEnhancements;
+public class HazardManagerHelper
+{
+	[MenuItem("SMW/ScriptableObject/HazardManager")]
+	static Hazards CreateAsset ()
+	{
+
+		return ScriptableObjectUtility.CreateAsset<Hazards>("Assets","HazardsManager",true);
+
+	}
+}
+#endif
+
 public class Hazards : ScriptableObject {
 	
 	public List<Hazard> list;

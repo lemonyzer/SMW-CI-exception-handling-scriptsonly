@@ -15,10 +15,10 @@ public class WarpArrow : ScriptableObject {
 //	}
 	public List<Sprite> warpArrows;
 	public bool init = false;
-	public Sprite[] north;
-	public Sprite[] east;
-	public Sprite[] south;
-	public Sprite[] west;
+	//public Sprite[] north;
+	//public Sprite[] east;
+	//public Sprite[] south;
+	//public Sprite[] west;
 
 	public void OnEnable ()
 	{
@@ -33,22 +33,22 @@ public class WarpArrow : ScriptableObject {
 			return;
 		}
 
-		for (int i=0; i< 10; i++)
-		{
-			warpArrows.Add (north[i]);
-		}
-		for (int i=0; i< 10; i++)
-		{
-			warpArrows.Add (east[i]);
-		}
-		for (int i=0; i< 10; i++)
-		{
-			warpArrows.Add (south[i]);
-		}
-		for (int i=0; i< 10; i++)
-		{
-			warpArrows.Add (west[i]);
-		}
+		//for (int i=0; i< 10; i++)
+		//{
+		//	warpArrows.Add (north[i]);
+		//}
+		//for (int i=0; i< 10; i++)
+		//{
+		//	warpArrows.Add (east[i]);
+		//}
+		//for (int i=0; i< 10; i++)
+		//{
+		//	warpArrows.Add (south[i]);
+		//}
+		//for (int i=0; i< 10; i++)
+		//{
+		//	warpArrows.Add (west[i]);
+		//}
 		init = true;
 				#if UNITY_EDITOR
 		UnityEditor.EditorUtility.SetDirty (this);

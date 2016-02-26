@@ -6,25 +6,25 @@ using System.Collections;
 using System.Collections.Generic;
 using SMW;
 
-[System.Serializable]
-public class Eyecandy
-{
-	int id;
-	// 1 = clouds
-	// 2 = ghosts
-	// 5 = leafs
-	// 9 = snow
-	// 16 = fish
-	// 32 = rain
-	// 80 = bubbles
-}
+//[System.Serializable]
+//public class Eyecandy
+//{
+//	int id;
+//	// 1 = clouds
+//	// 2 = ghosts
+//	// 5 = leafs
+//	// 9 = snow
+//	// 16 = fish
+//	// 32 = rain
+//	// 80 = bubbles
+//}
 
-[System.Serializable]
-public class EyecandyManager
-{
-	[SerializeField]
-	List<Eyecandy> list;
-}
+//[System.Serializable]
+//public class EyecandyManager
+//{
+//	[SerializeField]
+//	List<Eyecandy> list;
+//}
 
 
 [System.Serializable]
@@ -41,8 +41,8 @@ public class TilesetManager : ScriptableObject {
 	Tileset blockTileset;
 	[SerializeField]
 	Tileset levelEditorTileTypeTileset;
-	[SerializeField]
-	EyecandyManager eyecandyManager;
+	//[SerializeField]
+	//EyecandyManager eyecandyManager;
 	[SerializeField]
 	Tileset unknownTileset;
 //	Tileset tClassicTileset;

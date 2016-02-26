@@ -11,7 +11,7 @@ namespace UnityEnhancements
         /// <summary>
         //	This makes it easy to create, name and place unique new ScriptableObject asset files.
         /// </summary>
-        public static T CreateAsset<T>( string projectRelativeAssetPath = "Assets", string assetName = "" ) where T : ScriptableObject
+		public static T CreateAsset<T>( string projectRelativeAssetPath = "Assets", string assetName = "", bool focusInProjectWindow = false ) where T : ScriptableObject
         {
             T asset = ScriptableObject.CreateInstance<T>();
 
@@ -57,8 +57,12 @@ namespace UnityEnhancements
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            EditorUtility.FocusProjectWindow();
-            Selection.activeObject = asset;
+
+			if (focusInProjectWindow)
+			{
+	            EditorUtility.FocusProjectWindow();
+	            Selection.activeObject = asset;
+			}
 
             return asset;
         }

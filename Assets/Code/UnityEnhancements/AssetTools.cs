@@ -7,6 +7,21 @@ namespace UnityEnhancements
     public class AssetTools
     {
 
+		public static string GetProjectPath ()
+		{
+			string projectPath = Application.dataPath.Substring(0, Application.dataPath.Length - "/Assets".Length);
+			return projectPath;
+		}
+
+		public static string GetAbsolutAssetPath (Object asset)
+		{
+			string relAssetPath = AssetDatabase.GetAssetPath (asset);
+			if (string.IsNullOrEmpty (relAssetPath))
+				return null;
+			else
+				return GetProjectPath() + "/" + relAssetPath;
+		}
+
         public static string GenerateUniqueAssetPath(string projRelativeFilePath)
         {
 

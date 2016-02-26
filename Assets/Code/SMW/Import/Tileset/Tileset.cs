@@ -16,7 +16,7 @@ public class TilesetHelper
     static Tileset CreateAsset ()
     {
 
-        return ScriptableObjectUtility.CreateAsset<Tileset>("Blubb");
+		return ScriptableObjectUtility.CreateAsset<Tileset>("Assets","emptyTileset", true);
 
         //Tileset newAsset = ScriptableObject.CreateInstance<Tileset>();
 

@@ -109,8 +109,23 @@ public class TilesetWindow : EditorWindow {
 						w_TilesetSprite = EditorGUILayout.ObjectField("Sprite", w_TilesetSprite, typeof(Sprite), false,  GUILayout.ExpandWidth(true)) as Sprite;
 						if(EditorGUI.EndChangeCheck())
 						{
-							if(w_TilesetSprite != null)
-								w_TilesetName = Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(w_TilesetSprite));
+							if (w_TilesetSprite != null) {
+
+
+								DirectoryInfo absolutAssetPath = new DirectoryInfo (UnityEnhancements.AssetTools.GetAbsolutAssetPath (w_TilesetSprite));
+
+								// large
+//								w_TilesetName = Path.GetFileNameWithoutExtension (AssetDatabase.GetAssetPath (w_TilesetSprite));
+
+								// Assets/Textures/tilesets/smb1
+//								w_TilesetName = Path.GetDirectoryName (AssetDatabase.GetAssetPath (w_TilesetSprite));
+
+								// Assets/Textures/tilesets/smb1/large.png
+//								w_TilesetName = AssetDatabase.GetAssetPath (w_TilesetSprite);
+
+								// smb1
+								w_TilesetName = absolutAssetPath.Parent.Name;
+							}
 							else
 								w_TilesetName = "";
 
@@ -122,6 +137,7 @@ public class TilesetWindow : EditorWindow {
 
 						}
 						EditorGUILayout.LabelField("TilesetName: "+ w_TilesetName, EditorStyles.boldLabel);
+						w_TilesetName = EditorGUILayout.TextField(w_TilesetName, EditorStyles.boldLabel);
 						w_TargetColor = EditorGUILayout.ColorField("Target Color:", w_TargetColor);
 						w_ReplacementColor = EditorGUILayout.ColorField("Replacement Color:", w_ReplacementColor);
 						if(w_TilesetSprite == null)
@@ -159,7 +175,12 @@ public class TilesetWindow : EditorWindow {
 								m_FileOpened = false;
 							}
 						}
-						EditorGUILayout.LabelField("Tileset's Tile Type File Path = " + w_TilesetTileTypeFilePath, GUILayout.ExpandWidth(true));
+						if (w_TilesetTileTypesList != null) {
+							EditorGUILayout.LabelField ("Tileset's Tile Type File Path = " + w_TilesetTileTypeFilePath, GUILayout.ExpandWidth (true));
+							EditorGUILayout.LabelField ("Tileset's Tile Type's: " + w_TilesetTileTypesList.Count , GUILayout.ExpandWidth (true));
+						} else {
+							EditorGUILayout.LabelField ("Tileset's Tile Type File NOT READY", GUILayout.ExpandWidth (true));
+						}
 						
 						bool current = GUI.enabled;
 						w_TileSpriteAlignment = (SpriteAlignment) EditorGUILayout.EnumPopup("Pivot", w_TileSpriteAlignment);
