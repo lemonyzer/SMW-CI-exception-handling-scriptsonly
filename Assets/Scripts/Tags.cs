@@ -73,30 +73,30 @@ public class Tags : MonoBehaviour {
 	public const string name_countDown = "CountDown";
 	public const string tag_countDown = "CountDown";
 
-	/**
-	 * Character Selection
-	 **/
-	public const string tag_CharacterPreview = "ChararacterPreview";
-	public const string character = "Character";
-	public const string ai = "AI";
-	public const string death = "Death";
-	public const string enemy = "Enemy";
+//	/**
+//	 * Character Selection
+//	 **/
+//	public const string tag_CharacterPreview = "ChararacterPreview";
+//	public const string character = "Character";
+//	public const string ai = "AI";
+//	public const string death = "Death";
+//	public const string enemy = "Enemy";
 
 	
-	/**
-	 * Team Selection
-	 **/
-	public const string Team1 = "Team1";
-	public const string TeamRed = "TeamRed";
-
-	public const string Team2 = "Team2";
-	public const string TeamGreen = "TeamGreen";
-
-	public const string Team3 = "Team3";
-	public const string TeamYellow = "TeamYellow";
-
-	public const string Team4 = "Team4";
-	public const string TeamBlue = "TeamBlue";
+//	/**
+//	 * Team Selection
+//	 **/
+//	public const string Team1 = "Team1";
+//	public const string TeamRed = "TeamRed";
+//
+//	public const string Team2 = "Team2";
+//	public const string TeamGreen = "TeamGreen";
+//
+//	public const string Team3 = "Team3";
+//	public const string TeamYellow = "TeamYellow";
+//
+//	public const string Team4 = "Team4";
+//	public const string TeamBlue = "TeamBlue";
 
 	
 }

@@ -33,7 +33,7 @@ public class BreakableBlock : MonoBehaviour {
 
 	void PreInit () {
 		myBlockCollider = this.gameObject.AddComponent<BoxCollider2D>();
-		this.gameObject.layer = LayerMask.NameToLayer (Layer.blockLayerName);
+		this.gameObject.layer = LayerMask.NameToLayer (Layer.Instance.blockLayerName);
 	}
 
 	public void CreateBlock () {
@@ -49,7 +49,7 @@ public class BreakableBlock : MonoBehaviour {
 				return;
 
 			Debug.Log("OnTriggerEnter2D: " + other.name);
-			if(other.gameObject.layer == Layer.head)
+			if(other.gameObject.layer == Layer.Instance.head)
 			{
 				// Abfrage ob Trigger/Collision am unteren Rand des Blocks
 				Debug.Log("Parent: " + other.gameObject.transform.parent.name);

@@ -58,7 +58,7 @@ public class OnOffSwitchBlockScript : MonoBehaviour {
 		blockSpriteRenderer.sortingLayerName = spriteLayer;
 
 		this.switchConnection = switchConnection;
-		this.gameObject.layer = LayerMask.NameToLayer (Layer.blockLayerName);
+		this.gameObject.layer = LayerMask.NameToLayer (Layer.Instance.blockLayerName);
 	}
 	
 	public void Switch ()
@@ -107,7 +107,7 @@ public class OnOffSwitchBlockScript : MonoBehaviour {
 	{
 		if(Network.isServer || Network.peerType == NetworkPeerType.Disconnected)
 		{
-			if(other.gameObject.layer == Layer.head)
+			if(other.gameObject.layer == Layer.Instance.head)
 			{
 				//				if(hasPowerUp)
 				//				{

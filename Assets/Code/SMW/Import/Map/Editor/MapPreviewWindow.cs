@@ -1236,7 +1236,7 @@ public class MapPreviewWindow : EditorWindow {
 					platformMergeShift.y = 0.5f;
 					
 					box.offset = startPoint + currentPoint + platformMergeShift;
-					currentColliderGO.layer = LayerMask.NameToLayer (Layer.groundLayerName);
+					currentColliderGO.layer = LayerMask.NameToLayer (Layer.Instance.groundLayerName);
 				}
 				else if (currentStartRefTile.iType == TileType.tile_solid_on_top)
 				{
@@ -1255,7 +1255,7 @@ public class MapPreviewWindow : EditorWindow {
 					box.offset = startPoint + currentPoint + platformMergeShift;
 					
 //					box.offset = new Vector2 (-platformData.iPlatformWidth*0.5f, platformData.iPlatformHeight*0.5f -0.05f) + new Vector2 (x,-y) + (Vector2) currentColliderGO.transform.position;
-					currentColliderGO.layer = LayerMask.NameToLayer (Layer.jumpAblePlatformLayerName);
+					currentColliderGO.layer = LayerMask.NameToLayer (Layer.Instance.jumpAblePlatformLayerName);
 				}
 
 //				Debug.Log ("<color=grey><b>+" + currentWidth + "</b></color>" );
@@ -1726,13 +1726,13 @@ public class MapPreviewWindow : EditorWindow {
 		{
 			// Block
 			BoxCollider2D box = tileGO.AddComponent<BoxCollider2D>();
-			tileGO.layer = LayerMask.NameToLayer (Layer.groundLayerName);
+			tileGO.layer = LayerMask.NameToLayer (Layer.Instance.groundLayerName);
 			box.isTrigger = false;
 		}
 		else if(tileType == TileType.tile_solid_on_top)
 		{
 			// JumpOnPlatform
-			tileGO.layer = LayerMask.NameToLayer(Layer.jumpAblePlatformLayerName);
+			tileGO.layer = LayerMask.NameToLayer(Layer.Instance.jumpAblePlatformLayerName);
 			BoxCollider2D box = tileGO.AddComponent<BoxCollider2D>();
 			box.size = new Vector2 (1f,0.1f);
 			box.offset = new Vector2 (0.5f,0.95f);
@@ -1763,14 +1763,14 @@ public class MapPreviewWindow : EditorWindow {
 		{
 			// Block
 			BoxCollider2D box = tileGO.AddComponent<BoxCollider2D>();
-			tileGO.layer = LayerMask.NameToLayer (Layer.groundLayerName);
+			tileGO.layer = LayerMask.NameToLayer (Layer.Instance.groundLayerName);
 			box.isTrigger = false;
 		}
 		else if(tileType == TileType.tile_ice)
 		{
 			// Block
 			BoxCollider2D box = tileGO.AddComponent<BoxCollider2D>();
-			tileGO.layer = LayerMask.NameToLayer (Layer.groundLayerName);
+			tileGO.layer = LayerMask.NameToLayer (Layer.Instance.groundLayerName);
 			box.isTrigger = false;
 
 			PhysicsMaterial2D icy = new PhysicsMaterial2D ("Icey");
@@ -1780,7 +1780,7 @@ public class MapPreviewWindow : EditorWindow {
 		else if (tileType == TileType.tile_death)
 		{
 			BoxCollider2D box = tileGO.AddComponent<BoxCollider2D>();
-			tileGO.layer = LayerMask.NameToLayer (Layer.deathLayerName);
+			tileGO.layer = LayerMask.NameToLayer (Layer.Instance.deathLayerName);
 			box.isTrigger = true;
 		}
 		else if (tileType == TileType.tile_death_on_bottom ||
@@ -1789,7 +1789,7 @@ public class MapPreviewWindow : EditorWindow {
 		         tileType == TileType.tile_death_on_top)
 		{
 			BoxCollider2D box = tileGO.AddComponent<BoxCollider2D>();
-			tileGO.layer = LayerMask.NameToLayer (Layer.deathLayerName);
+			tileGO.layer = LayerMask.NameToLayer (Layer.Instance.deathLayerName);
 			box.isTrigger = true;
 		}
 		else if (tileType == TileType.tile_player_death)
@@ -1803,13 +1803,13 @@ public class MapPreviewWindow : EditorWindow {
 		         tileType == TileType.tile_super_death_top)
 		{
 			BoxCollider2D box = tileGO.AddComponent<BoxCollider2D>();
-			tileGO.layer = LayerMask.NameToLayer (Layer.superDeathLayerName);
+			tileGO.layer = LayerMask.NameToLayer (Layer.Instance.superDeathLayerName);
 			box.isTrigger = true;
 		}
 		else if(tileType == TileType.tile_solid_on_top)
 		{
 			// JumpOnPlatform
-			tileGO.layer = LayerMask.NameToLayer(Layer.jumpAblePlatformLayerName);
+			tileGO.layer = LayerMask.NameToLayer(Layer.Instance.jumpAblePlatformLayerName);
 			BoxCollider2D box = tileGO.AddComponent<BoxCollider2D>();
 			box.size = new Vector2 (1f,0.1f);
 			box.offset = new Vector2 (0f,0.45f);

@@ -94,7 +94,7 @@ public abstract class ItemScript : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if(other.gameObject.layer == Layer.item)
+		if(other.gameObject.layer == Layer.Instance.item)
 		{
 			if(other.gameObject.name == Tags.name_itemCollector)
 			{

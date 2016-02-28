@@ -47,7 +47,7 @@ public class SwitchTargetBlockScript : MonoBehaviour {
 			blockSpriteRenderer.sprite = offSprite;
 			
 		blockSpriteRenderer.sortingLayerName = spriteLayer;
-		this.gameObject.layer = LayerMask.NameToLayer (Layer.blockLayerName);
+		this.gameObject.layer = LayerMask.NameToLayer (Layer.Instance.blockLayerName);
 		
 	}
 

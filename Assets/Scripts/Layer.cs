@@ -1,20 +1,82 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Layer : MonoBehaviour {
+#if UNITY_EDITOR
+using UnityEditor;
+[CustomEditor(typeof(Layer))]
+public class LayerEditor : Editor {
+	Layer targetObject;
+
+	[MenuItem("SMW/ScriptableObject/LayerManager")]
+	static void CreateLayerManager()
+	{
+		UnityEnhancements.ScriptableObjectUtility.CreateAsset<Layer> ();
+	}
+
+	void OnEnable()
+	{
+		targetObject = (Layer)target;
+	}
+
+	public override void OnInspectorGUI()
+	{
+		//base.OnInspectorGUI ();
+		GUIElementsTop();
+
+		DrawDefaultInspector();
+
+		GUILayout.Space(10);
+		GUIElementsBottom();
+	}
+
+	void GUIElementsTop () {
+		if (GUILayout.Button ("Create Default Layers")) {
+		}
+
+		if (GUILayout.Button ("Update Layers")) {
+			targetObject.Init();
+		}
+
+		if (GUILayout.Button ("Check")) {
+		}
+	}
+
+	void GUIElementsBottom () {
+	}
+}
+#endif
+
+public class Layer : ScriptableObject {
+
+	static Layer instance;
+
+	public static Layer Instance {
+		get
+		{
+			if (instance == null)
+			{
+				// singleton instance not defined
+				instance = (Layer) FindObjectOfType<Layer>();
+			}
+
+			return instance;
+				
+		}
+		private set { instance = value; }
+	}
 	
 	// Physic Layer
 	
-	public static LayerMask allPlayer;
-	public static LayerMask whatIsStaticGround;
-	public static LayerMask whatIsJumpOnPlatform;
-	public static LayerMask whatIsAllGround;
-	public static LayerMask whatIsWall;
+	public LayerMask allPlayer;
+	public LayerMask whatIsStaticGround;
+	public LayerMask whatIsJumpOnPlatform;
+	public LayerMask whatIsAllGround;
+	public LayerMask whatIsWall;
 
-	public static int defaultLayer;
-	public static int deathLayer;
-	public static int superDeathLayer;
-	public static int player;
+	public int defaultLayer;
+	public int deathLayer;
+	public int superDeathLayer;
+	public int player;
 
 //	public int player1;
 //	public int player2;
@@ -22,59 +84,59 @@ public class Layer : MonoBehaviour {
 //	public int player4;
 	
 //	public int enemy;
-	public static int feet;
-	public static int head;
-	public static int body;
-	public static int item;
+	public int feet;
+	public int head;
+	public int body;
+	public int item;
 
-	public static int ground;
-	public static int groundIcyLayer;
+	public int ground;
+	public int groundIcyLayer;
 //	public int tagAble;
 //	public int floor;
-	public static int block;
-	public static int jumpAblePlatform;
+	public int block;
+	public int jumpAblePlatform;
 //	public int jumpAblePlatformSaveZone;
 	
-	public static int powerUp;
+	public int powerUp;
 //	public int bullet;
 	
-	public static int groundStopper;
+	public int groundStopper;
 	
 //	public int fader;
 
 
-	public const string defaultLayerName = "Default";
-	public const string deathLayerName = "Death";
-	public const string superDeathLayerName = "SuperDeath";
-	public const string playerLayerName = "Player";
+	public string defaultLayerName = "Default";
+	public string deathLayerName = "Death";
+	public string superDeathLayerName = "SuperDeath";
+	public string playerLayerName = "Player";
 
-//	public const string player1LayerName = "Player1";
-//	public const string player2LayerName = "Player2";
-//	public const string player3LayerName = "Player3";
-//	public const string player4LayerName = "Player4";
+//	public string player1LayerName = "Player1";
+//	public string player2LayerName = "Player2";
+//	public string player3LayerName = "Player3";
+//	public string player4LayerName = "Player4";
 //	
-	public const string feetLayerName = "Feet";
-	public const string headLayerName = "Head";
-	public const string bodyLayerName = "Body";
-	public const string itemLayerName = "Item";
-	public const string powerUpLayerName= "PowerUp";
+	public string feetLayerName = "Feet";
+	public string headLayerName = "Head";
+	public string bodyLayerName = "Body";
+	public string itemLayerName = "Item";
+	public string powerUpLayerName= "PowerUp";
 
-//	public const string enemyLayerName = "Enemy";
+//	public string enemyLayerName = "Enemy";
 
-	public const string groundLayerName = "Ground";
-	public const string groundIcyLayerName = "GroundIcy";
-//	public const string tagAbleLayerName = "TagAble";
-//	public const string floorLayerName = "Floor";
-	public const string blockLayerName = "Block";
-	public const string jumpAblePlatformLayerName = "JumpOnPlatform";
-//	public const string jumpAblePlatformSaveZoneLayerName = "JumpSaveZone";
+	public string groundLayerName = "Ground";
+	public string groundIcyLayerName = "GroundIcy";
+//	public string tagAbleLayerName = "TagAble";
+//	public string floorLayerName = "Floor";
+	public string blockLayerName = "Block";
+	public string jumpAblePlatformLayerName = "JumpOnPlatform";
+//	public string jumpAblePlatformSaveZoneLayerName = "JumpSaveZone";
 
-//	public const string bulletLayerName = "Bullet";
-	public const string groundStopperLayerName = "GroundStopper";
+//	public string bulletLayerName = "Bullet";
+	public string groundStopperLayerName = "GroundStopper";
 	
-//	public const string faderLayerName = "Fader";
+//	public string faderLayerName = "Fader";
 	
-	void Awake()
+	public void Init()
 	{
 		Debug.LogWarning(this.ToString() + ": Awake() - init public layer integers, scripts layer instantiation have to be AFTER this initialisation, NOT IN AWAKE!!!" );
 

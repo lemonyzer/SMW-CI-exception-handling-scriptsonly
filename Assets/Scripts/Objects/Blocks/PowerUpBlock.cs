@@ -72,7 +72,7 @@ public class PowerUpBlock : MonoBehaviour {
 		BoxCollider2D blockCollider = this.gameObject.AddComponent<BoxCollider2D> ();
 
 		// Layer
-		this.gameObject.layer = LayerMask.NameToLayer (Layer.blockLayerName);
+		this.gameObject.layer = LayerMask.NameToLayer (Layer.Instance.blockLayerName);
 
 		// PowerUps...
 		//"Assets/Resources/Items/..."
@@ -90,7 +90,7 @@ public class PowerUpBlock : MonoBehaviour {
 	{
 		if(Network.isServer || Network.peerType == NetworkPeerType.Disconnected)
 		{
-			if(other.gameObject.layer == Layer.head)
+			if(other.gameObject.layer == Layer.Instance.head)
 			{
 				if(hasPowerUp)
 				{
