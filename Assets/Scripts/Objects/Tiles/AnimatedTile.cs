@@ -8,9 +8,9 @@ public class AnimatedTile : MonoBehaviour {
 	public int animationStep = 1;
 	SpriteRenderer spriteRenderer;
 	float lastChangeTimeStamp = 0f;
-	float nextChangeTimeStamp = 0f;
+//	float nextChangeTimeStamp = 0f;
 	float timeStep = 0.25f;
-	bool pauseBetweemAnimation = false;
+//	bool pauseBetweemAnimation = false;
 	[SerializeField]
 	Sprite[] animationSprites;			// TODO needs to be public to initialize in Editor Mode!!! or [SerializeField] TODO ????  BAD WAY ???? TODO
 	int currentState = 0;

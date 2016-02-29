@@ -10,7 +10,15 @@ public class MapDataFlags
 	int width;
 	[SerializeField]
 	bool[] mapData;
-	
+
+	public int Height {
+		get { return height; }
+	}
+
+	public int Width {
+		get { return width; }
+	}
+
 	public MapDataFlags (int x, int y)
 	{
 		width = x;

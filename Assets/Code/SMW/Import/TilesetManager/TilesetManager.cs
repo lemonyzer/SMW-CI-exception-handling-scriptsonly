@@ -36,25 +36,25 @@ public class TilesetManager : ScriptableObject {
 	[SerializeField]
 	List<Tileset> tilesetList;
 	[SerializeField]
-	Tileset animationTileset;
+	Tileset animationTileset = null;
 	[SerializeField]
-	Tileset blockTileset;
+	Tileset blockTileset = null;
 	[SerializeField]
-	Tileset levelEditorTileTypeTileset;
+	Tileset levelEditorTileTypeTileset = null;
 	//[SerializeField]
 	//EyecandyManager eyecandyManager;
 	[SerializeField]
-	Tileset unknownTileset;
+	Tileset unknownTileset = null;
 //	Tileset tClassicTileset;
 	[SerializeField]
-	WarpArrow warpArrows;
+	WarpArrow warpArrows = null;
 
 	[SerializeField]
 	public List<string> typeConversions;
 
 	public void OnEnable()
 	{
-		Debug.Log(this.ToString() + " OnEnable()");
+//		Debug.Log(this.ToString() + " OnEnable()");
 		if(tilesetList == null)
 		{
 			Debug.Log(this.ToString() + " tilesetList == null");

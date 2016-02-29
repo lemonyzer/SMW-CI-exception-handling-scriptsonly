@@ -25,10 +25,10 @@ public class PowerUpBlock : MonoBehaviour {
 	private GameObject powerupClone;
 
 	SpriteRenderer blockSpriteRenderer;
-	float blockCenterPositionX;
-	float blockCenterPositionY;
-	float blockWidth;
-	float blockHeight;
+//	float blockCenterPositionX;
+//	float blockCenterPositionY;
+//	float blockWidth;
+//	float blockHeight;
 
 	// Use this for initialization
 	void Awake() {
@@ -46,10 +46,10 @@ public class PowerUpBlock : MonoBehaviour {
 	{
 //		anim.SetBool(hash.hasPowerUpBool,hasPowerUp);
 		blockSpriteRenderer = this.GetComponent<SpriteRenderer>();
-		blockCenterPositionX = blockSpriteRenderer.bounds.center.x;
-		blockCenterPositionY = blockSpriteRenderer.bounds.center.y;
-		blockWidth = blockSpriteRenderer.bounds.size.x;
-		blockHeight = blockSpriteRenderer.bounds.size.y;
+//		blockCenterPositionX = blockSpriteRenderer.bounds.center.x;
+//		blockCenterPositionY = blockSpriteRenderer.bounds.center.y;
+//		blockWidth = blockSpriteRenderer.bounds.size.x;
+//		blockHeight = blockSpriteRenderer.bounds.size.y;
 		anim.SetTrigger(HashID.powerUpBlockLoadedTrigger);
 	}
 	
@@ -69,7 +69,8 @@ public class PowerUpBlock : MonoBehaviour {
 		blockSpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
 
 		// BoxCollider
-		BoxCollider2D blockCollider = this.gameObject.AddComponent<BoxCollider2D> ();
+//		BoxCollider2D blockCollider = this.gameObject.AddComponent<BoxCollider2D> ();
+		this.gameObject.AddComponent<BoxCollider2D> ();
 
 		// Layer
 		this.gameObject.layer = LayerMask.NameToLayer (Layer.Instance.blockLayerName);
@@ -104,8 +105,8 @@ public class PowerUpBlock : MonoBehaviour {
 								{
 									ReleasingRandomPowerUp();
 								}
-								if(Network.isServer)
-									GetComponent<NetworkView>().RPC("ReleasingRandomPowerUp", RPCMode.All);			// PowerUpBlock animation setzen, Item selbst wird über Network.instantiated
+								//if(Network.isServer)
+								//	GetComponent<NetworkView>().RPC("ReleasingRandomPowerUp", RPCMode.All);			// PowerUpBlock animation setzen, Item selbst wird über Network.instantiated
 							}
 						//}
 						//else
@@ -188,13 +189,13 @@ public class PowerUpBlock : MonoBehaviour {
 		{
 			BlockReloaded();
 		}
-		if(Network.isServer)
-		{
-			GetComponent<NetworkView>().RPC("BlockReloaded", RPCMode.All);
-		}
+		//if(Network.isServer)
+		//{
+		//	GetComponent<NetworkView>().RPC("BlockReloaded", RPCMode.All);
+		//}
 	}
 
-	[RPC]
+//	[RPC]
 	void ReleasingRandomPowerUp()
 	{
 		AudioSource.PlayClipAtPoint(powerUpReleaseSound,transform.position,1);
@@ -270,7 +271,7 @@ public class PowerUpBlock : MonoBehaviour {
 //			PhotonNetwork.Destroy (powerupClone);					// BAD Programming!! powerupClone loses referenz if new PowerUp Spawns...
 //	}
 
-	[RPC]
+//	[RPC]
 	void BlockReloaded()
 	{
 		hasPowerUp=true;

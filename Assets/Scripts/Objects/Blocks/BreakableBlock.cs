@@ -15,11 +15,11 @@ public class BreakableBlock : MonoBehaviour {
 	private GameObject myBlock;
 	private BoxCollider2D myBlockCollider;
 
-	NetworkView myNView;
+//	NetworkView myNView;
 
 	void Awake()
 	{
-		myNView = this.GetComponent<NetworkView>();
+		//myNView = this.GetComponent<NetworkView>();
 
 //		myTriggerZone = GetComponent<BoxCollider2D>();
 		myBlock = this.gameObject;
@@ -63,8 +63,8 @@ public class BreakableBlock : MonoBehaviour {
 						breakTriggered = true;	
 						if (Network.peerType == NetworkPeerType.Disconnected)
 							BreakEffekt ();
-						else
-							myNView.RPC("Breaking", RPCMode.AllBuffered, (float)Network.time);				// all buffered, level is changeing!!
+						//else
+						//	myNView.RPC("Breaking", RPCMode.AllBuffered, (float)Network.time);				// all buffered, level is changeing!!
 //					}
 //					else
 //					{
@@ -144,7 +144,7 @@ public class BreakableBlock : MonoBehaviour {
 		this.enabled = false;
 	}
 
-	[RPC]
+//	[RPC]
 	void Breaking(float realTimeStamp, NetworkMessageInfo info)
 	{
 //		Debug.LogWarning("RPC Breaking Time.time = "+ Time.time +"\n" + 

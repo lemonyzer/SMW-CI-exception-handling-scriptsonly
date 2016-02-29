@@ -3,7 +3,6 @@ using System.Collections;
 
 public class HashID : MonoBehaviour {
 
-	[SerializeField]
 	public static string l_base = "Base Layer";
 	public static string l_overlay = "Special Layer";
 

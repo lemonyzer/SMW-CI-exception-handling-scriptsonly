@@ -10,6 +10,14 @@ public class MapTopLayer
 	int width;
 	[SerializeField]
 	MapTile[] mapTiles;
+
+	public int Height {
+		get { return height; }
+	}
+
+	public int Width {
+		get { return width; }
+	}
 	
 	public MapTopLayer (int x, int y)
 	{

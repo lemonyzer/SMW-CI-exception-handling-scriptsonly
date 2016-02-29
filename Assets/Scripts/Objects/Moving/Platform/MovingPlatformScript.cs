@@ -23,7 +23,7 @@ public class MovingPlatformScript : MonoBehaviour {
 
 	Vector3 diff;
 	
-	float velocityTranslation = 0.24f;
+//	float velocityTranslation = 0.24f;
 
 	[SerializeField]
 	Vector3 center;

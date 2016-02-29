@@ -87,7 +87,7 @@ public class BulletBillScript : MonoBehaviour {
 		Vector3 scale = Vector3.one;
 		Vector3 direction = Vector3.zero;
 		float velocity = hazard.dparam[0];
-		Vector3 veloctiy3 = new Vector3 (velocity, 0f, 0f); 
+//		Vector3 veloctiy3 = new Vector3 (velocity, 0f, 0f); 
 		direction.x = velocity / velocity;
 		scale.x = velocity / Mathf.Abs(velocity);
 		currBullet.transform.localScale = scale;

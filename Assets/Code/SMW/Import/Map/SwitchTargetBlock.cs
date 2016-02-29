@@ -13,6 +13,11 @@ public class SwitchTargetBlock
 	[SerializeField]
 	MapBlock mapBlock;
 
+	public MapBlock MapBlock {
+		get { return mapBlock; }
+		set { mapBlock = value; }
+	}
+
 	public SwitchTargetBlock (int x, int y, MapBlock block)
 	{
 		this.x = x;

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class FlameCannonScript : MonoBehaviour {
 
-	Transform myTransform;
+//	Transform myTransform;
 	public MapHazard hazard;
 	float shootIntervalMin = 2f;
 	float shootIntervalMax = 4f;
@@ -81,7 +81,7 @@ public class FlameCannonScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		myTransform = this.transform;
+//		myTransform = this.transform;
 	}
 
 	public float GetRandomTimeStamp ()

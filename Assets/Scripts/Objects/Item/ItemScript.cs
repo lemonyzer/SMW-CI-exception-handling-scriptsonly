@@ -19,7 +19,7 @@ public abstract class ItemScript : MonoBehaviour {
 //	public delegate void OnCollecting(GameObject killer, GameObject victim);
 //	public static event OnCollecting onRageKill;
 
-	protected int _itemId;	
+	protected int _itemId = -1;	
 
 	public int itemId {
 		get {
@@ -99,7 +99,7 @@ public abstract class ItemScript : MonoBehaviour {
 			if(other.gameObject.name == Tags.name_itemCollector)
 			{
 				// Player gefunden
-				if(itemId == null)
+				if(itemId == -1)
 				{
 					Debug.LogError(this.gameObject.name + " hat kein Item im Inspektor gesetzt!!!");
 				}

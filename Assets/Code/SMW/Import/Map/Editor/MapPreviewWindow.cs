@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using UnityEditor;
 using SMW;
+using UnityEnhancements;
 
 public class MapPreviewWindow : EditorWindow {
 
@@ -66,7 +67,7 @@ public class MapPreviewWindow : EditorWindow {
 		if(currWindow == null)
 		{
 			currWindow = (MapPreviewWindow) EditorWindow.GetWindow(typeof(MapPreviewWindow));
-			currWindow.title = "SMW Map Preview";
+			currWindow.titleContent.text = "SMW Map Preview";
 //			currWindow.minSize = new Vector2(256,512);
 		}
 		else
@@ -390,11 +391,11 @@ public class MapPreviewWindow : EditorWindow {
 						}
 						else
 						{
-							bool useTileType = true;
+//							bool useTileType = true;
 							if(translatedTile.iTilesetID == Globals.TILESETANIMATED)	// geht nur mit mapDataRaw !!!
 							{
 								// TILESET ANIMATED
-								useTileType = false;
+//								useTileType = false;
 								translatedTile.iTilesetID = currentRawTilesetTile.iTilesetID;
 								translatedTile.iCol = currentRawTilesetTile.iCol;
 								translatedTile.iRow = currentRawTilesetTile.iRow;
@@ -413,7 +414,7 @@ public class MapPreviewWindow : EditorWindow {
 									translatedTile.iCol = 0;
 									translatedTile.iRow = 0;
 									
-									useTileType = false;
+//									useTileType = false;
 								}
 								else
 								{
@@ -430,10 +431,10 @@ public class MapPreviewWindow : EditorWindow {
 										translatedTile.iRow = 0;
 									}
 
-									if(setTileTypeForNonValidTiles)		
-										useTileType = true;				// obwohl aktuelles Tile einem Tileste angehört das in der Map-Datei nicht gelistet wurde wird der TileTyp vom ersten Tileset verwendet um dem Tile Collider/Movement/Friction zu geben
-									else
-										useTileType = false;
+//									if(setTileTypeForNonValidTiles)		
+//										useTileType = true;				// obwohl aktuelles Tile einem Tileste angehört das in der Map-Datei nicht gelistet wurde wird der TileTyp vom ersten Tileset verwendet um dem Tile Collider/Movement/Friction zu geben
+//									else
+//										useTileType = false;
 
 									translatedTile.iTilesetID = (short) mapSO.translationid[currentRawTilesetTile.iTilesetID];
 								}
@@ -452,7 +453,7 @@ public class MapPreviewWindow : EditorWindow {
 									translatedTile.iCol = 0;
 									translatedTile.iRow = 0;
 									
-									useTileType = false;
+//									useTileType = false;
 								}
 								else
 								{
@@ -469,10 +470,10 @@ public class MapPreviewWindow : EditorWindow {
 										translatedTile.iRow = 0;
 									}
 									
-									if(setTileTypeForNonValidTiles)		
-										useTileType = true;				// obwohl aktuelles Tile einem Tileste angehört das in der Map-Datei nicht gelistet wurde wird der TileTyp vom ersten Tileset verwendet um dem Tile Collider/Movement/Friction zu geben
-									else
-										useTileType = false;
+//									if(setTileTypeForNonValidTiles)		
+//										useTileType = true;				// obwohl aktuelles Tile einem Tileste angehört das in der Map-Datei nicht gelistet wurde wird der TileTyp vom ersten Tileset verwendet um dem Tile Collider/Movement/Friction zu geben
+//									else
+//										useTileType = false;
 									
 									// translate from Map TilesetID to Lokal TilesetManager TilesetID
 									// Map.TilesetID -> Lokal TilesetManager.GetTilesetIDByName(Map.Tileset)TilesetID)
@@ -487,7 +488,7 @@ public class MapPreviewWindow : EditorWindow {
 								// translate from Map TilesetID to Lokal TilesetManager TilesetID
 								// Map.TilesetID -> Lokal TilesetManager.GetTilesetIDByName(Map.Tileset)TilesetID)
 								translatedTile.iTilesetID = (short) mapSO.translationid[currentRawTilesetTile.iTilesetID];		// TODO lokal translation normal tile
-								useTileType = true;	
+//								useTileType = true;	
 							}
 
 							GameObject currentTileGO = new GameObject("Tile " + x.ToString("D2") + " " + y.ToString("D2"));
@@ -601,7 +602,7 @@ public class MapPreviewWindow : EditorWindow {
 							currentTileGO.transform.localPosition = tileLocalPos;
 
 							TileScript currenTileScript = currentTileGO.AddComponent<TileScript>();
-							currenTileScript.SetMapBlock (currenObjectDataMapBlock);
+							currenTileScript.MapBlock = currenObjectDataMapBlock;
 							MapBlock mapBlock = currenObjectDataMapBlock;
 							if (mapBlock.iType < (short) 7 ||
 							    mapBlock.iType > (short) 14 && mapBlock.iType < (short) 22)
@@ -629,19 +630,19 @@ public class MapPreviewWindow : EditorWindow {
 									List<GameObject> powerUpGOs = new List<GameObject> ();
 									
 									string powerUpsFolderPath = Application.dataPath + "/Resources/Items/";
-									FileInfo[] info = GetFileList (powerUpsFolderPath, "*.prefab");
-									if (info != null)
+									IEnumerable<FileInfo> infos = IOTools.GetFilesByExtensions (new DirectoryInfo(powerUpsFolderPath), ".prefab");
+									if (infos != null)
 									{
 //										Debug.Log ("Test " + info.ToString());
-										for (int i=0; i<info.Length; i++)
+										foreach (FileInfo info in infos)
 										{
 //											Debug.Log ("info [" + i + "]");
 											
-											if (info[i] != null)
+											if (info != null)
 											{
 //												Debug.Log ("info [" + i + "] = " + info[i]);
 												
-												string absPath = info[i].FullName;//.Substring( Application.dataPath.Length-1 );
+												string absPath = info.FullName;//.Substring( Application.dataPath.Length-1 );
 												string relPath = "";
 
 //												Debug.LogWarning (System.IO.Path.GetFullPath (Application.dataPath));
@@ -1448,19 +1449,19 @@ public class MapPreviewWindow : EditorWindow {
 						continue;
 
 					int restWidth = Globals.MAPWIDTH - x;
-					int restHeight = Globals.MAPHEIGHT - y;
+//					int restHeight = Globals.MAPHEIGHT - y;
 
 					int currentWidth = 1;
-					int currentHeight = 1;
+//					int currentHeight = 1;
 
-					bool otherTypeFound = false;
+//					bool otherTypeFound = false;
 
 					for (int a=1; a< restWidth; a++)
 					{
 						currentWidth = a;
 						if (currentElement.iType != mapDataTop.GetTile (x+a, y).iType)
 						{
-							otherTypeFound = true;
+//							otherTypeFound = true;
 							break;
 						}
 						else
@@ -1669,8 +1670,8 @@ public class MapPreviewWindow : EditorWindow {
 			{
 				if (warpexits[i] != null)
 				{
-					int xRef = warpexits[i].x;
-					int yRef = warpexits[i].y;
+//					int xRef = warpexits[i].x;
+//					int yRef = warpexits[i].y;
 					
 
 
@@ -1896,13 +1897,13 @@ public class MapPreviewWindow : EditorWindow {
 				batch_LastWorkingMapsImportPath = batch_MapsImportPath;
 				//absolutenPath in EditorPrefs speichern 
 				EditorPrefs.SetString(EP_lastBatchMapsImportFolder, batch_LastWorkingMapsImportPath);
-				window_Batch_FileInfo = GetFileList(batch_MapsImportPath, "*.map");
+//				window_Batch_FileInfo = GetFileList(batch_MapsImportPath, "*.map");
 			}
 			else
 			{
 				//WITCHTIG!!!!!!!!!!
 				batch_MapsImportPath = "";
-				window_Batch_FileInfo = null;
+//				window_Batch_FileInfo = null;
 				
 			}
 			
@@ -1951,46 +1952,46 @@ public class MapPreviewWindow : EditorWindow {
 		return null;
 	}
 
-	FileInfo[] window_Batch_FileInfo = null;
+//	FileInfo[] window_Batch_FileInfo = null;
 	
-	FileInfo[] GetFileList (string absPath, string fileEnd)
-	{
-		if (!string.IsNullOrEmpty(absPath))
-		{
-			DirectoryInfo dir = new DirectoryInfo(absPath);
-			FileInfo[] info = dir.GetFiles(fileEnd);
-			
-			
-			// Einmalige ausgabe auf Console
-			foreach (FileInfo f in info)
-			{
-				//				Debug.Log("Found " + f.Name);
-				//				Debug.Log("f.DirectoryName=" + f.DirectoryName);
-				//				Debug.Log("f.FullName=" + f.FullName);
-				//				Debug.Log("modified=" + f.FullName.Substring(Application.dataPath.Length - "Assets".Length));
-				// relative pfad angabe
-//relPath		string currentMapPath = f.FullName.Substring(Application.dataPath.Length - "Assets".Length);
-				string currentMapPath = f.FullName;		//absPath
-//				Debug.Log("currentMapPath=" + currentMapPath);
-				
-//				string mapName = GetMapNameFromFileName(f.Name);
-//				if(mapName != null)
-//				{
-//					Debug.Log(mapName);
-//				}
-//				else
-//				{
-//					Debug.LogError(f.Name + " konnte mapName Name nicht extrahieren");
-//				}
-			}
-			return info;
-		}
-		else
-		{
-			Debug.LogError("absPath == \"\" or NULL ");
-			return null;
-		}
-	}
+//	FileInfo[] GetFileList (string absPath, string fileEnd)
+//	{
+//		if (!string.IsNullOrEmpty(absPath))
+//		{
+//			DirectoryInfo dir = new DirectoryInfo(absPath);
+//			FileInfo[] info = dir.GetFiles(fileEnd);
+//			
+//			
+//			// Einmalige ausgabe auf Console
+//			foreach (FileInfo f in info)
+//			{
+//				//				Debug.Log("Found " + f.Name);
+//				//				Debug.Log("f.DirectoryName=" + f.DirectoryName);
+//				//				Debug.Log("f.FullName=" + f.FullName);
+//				//				Debug.Log("modified=" + f.FullName.Substring(Application.dataPath.Length - "Assets".Length));
+//				// relative pfad angabe
+////relPath		string currentMapPath = f.FullName.Substring(Application.dataPath.Length - "Assets".Length);
+//				string currentMapPath = f.FullName;		//absPath
+////				Debug.Log("currentMapPath=" + currentMapPath);
+//				
+////				string mapName = GetMapNameFromFileName(f.Name);
+////				if(mapName != null)
+////				{
+////					Debug.Log(mapName);
+////				}
+////				else
+////				{
+////					Debug.LogError(f.Name + " konnte mapName Name nicht extrahieren");
+////				}
+//			}
+//			return info;
+//		}
+//		else
+//		{
+//			Debug.LogError("absPath == \"\" or NULL ");
+//			return null;
+//		}
+//	}
 
 	public string GetMapNameFromFileName(string fileName)
 	{
@@ -2007,11 +2008,12 @@ public class MapPreviewWindow : EditorWindow {
 		}
 		
 		//TODO DONE ordner auf existenz prüfen
-		FileInfo[] info = GetFileList(importPath, "*.map");
+//		FileInfo[] info = GetFileList(importPath, "*.map");
+		IEnumerable<FileInfo> info = IOTools.GetFilesByExtensions (new DirectoryInfo (importPath), ".map");
 
 		if(info == null)
 		{
-			Debug.LogError ("FileInfo[] == null !!!");
+			Debug.LogError ("IEnumerator<FileInfo> == null !!!");
 			return;
 		}
 

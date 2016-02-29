@@ -15,9 +15,14 @@ public class TileScript : MonoBehaviour {
 	public TileType tileType;
 	public TileTypeFlag tileTypeFlag;
 
-	public void SetMapBlock (MapBlock mapBlock)
-	{
-		this.mapBlock = mapBlock;
+//	public void SetMapBlock (MapBlock mapBlock)
+//	{
+//		this.mapBlock = mapBlock;
+//	}
+
+	public MapBlock MapBlock {
+		get { return mapBlock; }
+		set { mapBlock = value; }
 	}
 
 	// http://answers.unity3d.com/questions/62539/how-to-display-empty-game-object-in-the-editor.html

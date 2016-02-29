@@ -34,7 +34,7 @@ public class TilesetManagerWindow : EditorWindow {
 		if(currWindow == null)
 		{
 			currWindow = (TilesetManagerWindow) EditorWindow.GetWindow(typeof(TilesetManagerWindow));
-			currWindow.title = "Tileset Manager";
+			currWindow.titleContent.text = "Tileset Manager";
 //			currWindow.minSize = new Vector2(256,512);
 		}
 		else
@@ -69,8 +69,8 @@ public class TilesetManagerWindow : EditorWindow {
 
 	string EP_LastWorkingMapImportPath = "EP_LastWorkingMapImportPath";
 	string m_LastWorkingMapImportPath = "";
-	string m_LastMapPath = "";
-	bool m_FileOpened = false;
+//	string m_LastMapPath = "";
+//	bool m_FileOpened = false;
 	Map currentMap;
 
 	bool OnGUI_OpenFile(out string absPath)

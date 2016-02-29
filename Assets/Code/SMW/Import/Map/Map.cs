@@ -373,6 +373,10 @@ public class Map : ScriptableObject {
 	[SerializeField]
 	short musicCategoryID = 0;
 
+	public short MusicCategoryID () {
+		return musicCategoryID;
+	}
+
 	[SerializeField]
 	WarpMap warpdata;//[MAPWIDTH][MAPHEIGHT];
 	[SerializeField]
@@ -429,13 +433,13 @@ public class Map : ScriptableObject {
 	[SerializeField]
 	List<MovingPlatform> platformsList = new List<MovingPlatform>();
 
-	[SerializeField]
-	MovingPlatform[] tempPlatforms = new MovingPlatform[Globals.PLATFORMDRAWLAYERS];
+//	[SerializeField]
+//	MovingPlatform[] tempPlatforms = new MovingPlatform[Globals.PLATFORMDRAWLAYERS];
 	[SerializeField]
 	List<MovingPlatform> tempPlatformsList = new List<MovingPlatform>();
 
-	[SerializeField]
-	MovingPlatform[] platformdrawlayer = new MovingPlatform[Globals.PLATFORMDRAWLAYERS];
+//	[SerializeField]
+//	MovingPlatform[] platformdrawlayer = new MovingPlatform[Globals.PLATFORMDRAWLAYERS];
 	[SerializeField]
 	List<MovingPlatform> platformdrawlayerList = new List<MovingPlatform>();
 
@@ -1499,7 +1503,7 @@ public class Map : ScriptableObject {
 	bool fShowMapData = false;
 //	bool fShowPlatformData = false;
 	bool fShowWarpData = false;
-	bool fShowMapTop = false;
+//	bool fShowMapTop = false;
 //	bool fShowWarpExits = false;
 	bool fShowObjectData = false;
 

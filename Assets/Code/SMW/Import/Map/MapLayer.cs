@@ -17,6 +17,14 @@ public class MapLayer
 	[SerializeField]
 	TilesetTile[] tiles;
 
+	public int Height {
+		get { return height; }
+	}
+
+	public int Width {
+		get { return width; }
+	}
+
 	public MapLayer (int x, int y)
 	{
 		width = x;
