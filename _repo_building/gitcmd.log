@@ -1,0 +1,24 @@
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_before_new_algo.rar" --date "Tue, 09 Feb 2016 22:08:49 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_ChangeColor_works(pngNamingBug).rar" --date "Tue, 09 Feb 2016 23:45:17 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_struktured.rar" --date "Wed, 17 Feb 2016 18:57:11 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_CleanUp+Enhancement.rar" --date "Wed, 17 Feb 2016 21:15:25 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_ReadyToMigrateInRealProject.rar" --date "Wed, 17 Feb 2016 23:27:21 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_NamingFix_Tileset+Map_Migration.rar" --date "Thu, 18 Feb 2016 03:36:36 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_ramstein_no0.rar" --date "Sat, 20 Feb 2016 01:19:46 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_ramstein_no1.rar" --date "Sun, 21 Feb 2016 23:01:05 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_ramstein_no2_improved_tileset_import_andOther.rar" --date "Fri, 26 Feb 2016 13:25:31 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_ramstein_no3_improved_hazardmanager_IMPORT_BGs.rar" --date "Fri, 26 Feb 2016 16:15:53 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_ramstein_no4_layer_singletonmanager.rar" --date "Sun, 28 Feb 2016 02:03:51 +0100"
+repo.git.add(A=True)
+repo.git.commit (git commit) --allow-empty -m "SMWCharacterImport_ramstein_no5_ZERO_warning.rar" --date "Mon, 29 Feb 2016 14:43:05 +0100"
